@@ -17,7 +17,15 @@ app.use(bodyParser.urlencoded({ extended: true }))
 
 //------- Test connection -------//
 app.get("/", (req, res) => {
-	res.send("connected ^_^")
+	var result = {};
+	sql.connect(config, function (err){
+		if (err) {
+			result = {"api service":"connected" ,"database":"not connect!"}
+		}else {
+			result = {"api service":"connected" ,"database":"connected"}
+		}
+		res.send(result)
+	})
 })
 
 //----------------- Call store with query string --------------------//
