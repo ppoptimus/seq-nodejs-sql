@@ -28,6 +28,7 @@ app.get("/", (req, res) => {
 
 //--------------------- Search request detail -----------------------//
 app.post("/api/getNewRequest", async (req, res) => {
+	res.setHeader("Content-Type", "application/json")
 	const { rawHeaders, method, socket, url } = req
 	const { remoteAddress, remoteFamily } = socket
 
