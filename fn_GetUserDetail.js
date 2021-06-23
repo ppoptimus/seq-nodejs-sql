@@ -20,7 +20,7 @@ const getUserDetail = (req, res) => {
                 res.status(200).json(result.recordset[0])
             })
         }
-        //---------- Case ส่ง id มาเป็น parameter ---------//
+        //---------- Case ส่ง id มาเป็น parameter [hostname/api/getUser?id={id}]---------//
         else {
             request.input("user_id", sql.VarChar(50), req.query.id)
             request.execute("sp_get_user_by_id", (err, result) => {

@@ -46,9 +46,10 @@ app.post("/api/getNewRequest", async (req, res) => {
 })
 
 
-//------------ตัวอย่าง Call store with parameter ----------------//
 //--------------- Save data input from Branch --------------------//
 app.post("/api/saveNewRequest", (req, res) => {
+	res.setHeader("Content-Type", "application/json")
+	
 	const { rawHeaders, method, socket, url } = req
 	const { remoteAddress, remoteFamily } = socket
 
@@ -67,6 +68,8 @@ app.post("/api/saveNewRequest", (req, res) => {
 	saveRequestDetail(req, res);
 })
 
+
+//--------------- Get user / user detail  --------------------//
 app.get("/api/getUser", (req, res) => {
 	getUserDetail(req,res);
 })

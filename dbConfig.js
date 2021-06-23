@@ -6,6 +6,7 @@ const sqlConfig = {
 	database: "seq",
 	options: {
 		encrypt: false,
+		charset: 'utf8'
 	},
 };
 
