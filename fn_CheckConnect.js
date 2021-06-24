@@ -9,7 +9,7 @@ const testConnect = (req, res) => {
 		}else {
 			result = {"apiservice":"connected" ,"database":"connected"}
 		}
-		res.send(result)
+		return res.send(result)
 	})
 }
 

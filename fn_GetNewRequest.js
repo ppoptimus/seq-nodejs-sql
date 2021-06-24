@@ -23,7 +23,6 @@ const getRequestDetail = (req, res) => {
     @department_code = '${department_code}',
 	@ip_address = '${ip_address}'`
     //#endregion --- query string ------//
-	console.log(qryString)
 
 	log_event = "getRequestDetail"
 	related_table = "t_trans_request_detail"

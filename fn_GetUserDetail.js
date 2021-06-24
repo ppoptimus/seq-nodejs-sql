@@ -6,7 +6,7 @@ const getUserDetail = (req, res) => {
 
     sql.connect(config, (err) => {
         if(err){
-            res.status(400).json({ message: "error", description: err.originalError.message })
+            return res.status(400).json({ message: "error", description: err.originalError.message })
         }
 
         let request = new sql.Request()

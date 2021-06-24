@@ -2,16 +2,14 @@
 const express = require("express")
 const cors = require("cors")
 const bodyParser = require("body-parser")
-const sql = require("mssql")
-const timeout = require("connect-timeout")
 
 //------Call another page -------//
-const config = require("./dbConfig")
 const saveLog = require("./fn_SaveLog")
 const testConnect = require("./fn_CheckConnect")
 const getRequestDetail = require("./fn_GetNewRequest")
 const saveRequestDetail = require("./fn_SaveNewRequest")
 const getUserDetail = require("./fn_GetUserDetail")
+const getUserLevel = require("./fn_GetUserLevel")
 
 //-------Declare function -------//
 const app = express()
@@ -50,7 +48,6 @@ app.post("/api/getNewRequest", async (req, res) => {
 //--------------- Save data input from Branch --------------------//
 app.post("/api/saveNewRequest", (req, res) => {
 	res.setHeader("Content-Type", "application/json")
-	
 	const { rawHeaders, method, socket, url } = req
 	const { remoteAddress, remoteFamily } = socket
 
@@ -75,8 +72,9 @@ app.get("/api/getUser", (req, res) => {
 	getUserDetail(req,res);
 })
 
-
-
+app.get("/api/getUserLevel", (req, res) => {
+	getUserLevel(req, res);
+})
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
 app.listen(port, () => {
