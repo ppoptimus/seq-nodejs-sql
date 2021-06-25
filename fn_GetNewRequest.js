@@ -9,21 +9,23 @@ const getRequestDetail = (req, res) => {
 	let error_description
 	let related_table
 
-	//#region ---ตัวอย่าง Call store with query string ------//
-	//--------------create query string ---------------//
+	//#region ---ตัวอย่าง Call store with query string ---------//
+	//-----------------create query string -------------------//
 	const from_date = req.body.from_date === null ? null : req.body.from_date.toString()
 	const to_date = req.body.to_date === null ? null : req.body.to_date.toString()
+	const request_status = req.body.request_status
 	const department_code = req.body.department_code
 	const ip_address = req.body.ip_address === null ? null : req.body.ip_address.toString()
 	const create_event_by = req.body.create_event_by === null ? null : req.body.create_event_by.toString()
 	const qryString = `EXEC [dbo].[sp_get_new_request]
-
     @from_date = '${from_date}',
-    @to_date = '${to_date}', 
-    @department_code = '${department_code}',
+    @to_date = '${to_date}',
+	@request_status = ${request_status},
+    @department_code = ${department_code},
 	@ip_address = '${ip_address}'`
-    //#endregion --- query string ------//
+    //#endregion ---------- query string -----------------//
 
+	console.log(qryString)
 	log_event = "getRequestDetail"
 	related_table = "t_trans_request_detail"
 

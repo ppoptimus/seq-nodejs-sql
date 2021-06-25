@@ -1,13 +1,12 @@
-
 const sqlConfig = {
 	user: "sa",
 	password: "Peisui@2433",
-	server: "192.168.233.136",
+	server: "localhost",
 	database: "seq",
 	options: {
 		encrypt: false,
-		charset: 'utf8'
+		charset: "utf8",
 	},
-};
+}
 
-module.exports = sqlConfig;
+module.exports = sqlConfig

@@ -72,6 +72,8 @@ app.get("/api/getUser", (req, res) => {
 	getUserDetail(req,res);
 })
 
+
+//--------------- Get user' level  --------------------//
 app.get("/api/getUserLevel", (req, res) => {
 	getUserLevel(req, res);
 })
