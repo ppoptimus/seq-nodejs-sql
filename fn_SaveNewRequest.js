@@ -23,17 +23,22 @@ const saveRequestDetail = (req, res) => {
 		request.input("is_confirm", sql.Int, req.body.is_confirm)
 		request.execute("sp_save_new_request", (err, result) => {
 			if (err) {
+				saveLog("Save new Request", "error", "request body", err.originalError.message, null, req.body.create_by, req.body.ip_address)
 				return res.status(501).json({ message: "error", description: err.originalError.message })
 			}
 			else{
+				console.log(result.recordset[0].result)
 				if(result.recordset[0].result == "exists"){
+					saveLog("Save new Request", "pass", "exists data request", null, "request_detail", req.body.create_by, req.body.ip_address)
 					return res.status(200).json(result.recordset[0])
 				}
-				res.status(201).json(result.recordset[0])
+				saveLog("Save new Request", "success", null, null, "request_detail", req.body.create_by, req.body.ip_address)
+				res.status(204).json(result.recordset[0])
 			}
 			
 		})
 		if (err) {
+			saveLog("Save new Request", "error", "sql, connection", err.originalError.message, null, req.body.create_by, req.body.ip_address)
 			return res.status(400).json({ message: "error", description: err.originalError.message })
 		}
 	})

@@ -10,6 +10,7 @@ const getRequestDetail = require("./fn_GetNewRequest")
 const saveRequestDetail = require("./fn_SaveNewRequest")
 const getUserDetail = require("./fn_GetUserDetail")
 const getUserLevel = require("./fn_GetUserLevel")
+const changeRequestStatus = require("./fn_ChangeRequestStatus")
 
 //-------Declare function -------//
 const app = express()
@@ -61,7 +62,7 @@ app.post("/api/saveNewRequest", (req, res) => {
 		remoteFamily: remoteFamily,
 		url: url,
 	})
-	saveLog("saveDataBranch", "receive json", logDesc, null, null, "system", null)
+	saveLog("Save new Request", "receive json", logDesc, null, null, "system", null)
 
 	saveRequestDetail(req, res);
 })
@@ -76,6 +77,12 @@ app.get("/api/getUser", (req, res) => {
 //--------------- Get user' level  --------------------//
 app.get("/api/getUserLevel", (req, res) => {
 	getUserLevel(req, res);
+})
+
+
+//---------------- CHange Request Status -----------------//
+app.post("/api/changeRequestStatus", (req, res) => {
+	changeRequestStatus(req, res);
 })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
