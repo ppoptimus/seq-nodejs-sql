@@ -14,10 +14,10 @@ const generateRequestCode = (req, res) => {
 		request.input("max_count", sql.Int, req.body.max_count)
         request.execute("dbo.sp_auto_generate_code", (err, result) => {
             if(err){
-                saveLog("generateRequestCode", "error", "request body", err.originalError.message, null, req.body.action_by, req.body.ip_address)
+                saveLog("generateRequestCode", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
                 return res.status(501).json({ message: "error", description: err.originalError.message })
             }
-            saveLog("generateRequestCode", "success", result.returnValue, null, "sp_generate_request_code", req.body.action_by, req.body.ip_address)
+            saveLog("generateRequestCode", "success", result.returnValue, null, "sp_generate_request_code", req.body.user_name, req.body.ip_address)
             res.status(204).json(result.recordset[0])
         })
     })

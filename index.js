@@ -12,6 +12,7 @@ const getUserDetail = require("./fn_GetUserDetail")
 const getUserLevel = require("./fn_GetUserLevel")
 const changeRequestStatus = require("./fn_ChangeRequestStatus")
 const generateRequestCode = require("./fn_GenRequestCode")
+const saveDocumentSet = require("./fn_SaveDocumentSet")
 
 //-------Declare function -------//
 const app = express()
@@ -88,6 +89,10 @@ app.post("/api/changeRequestStatus", (req, res) => {
 
 app.post("/api/autoGenerateCode", (req, res) => {
 	generateRequestCode(req, res);
+})
+
+app.post("/api/saveDocumentSet", (req, res) => {
+	saveDocumentSet(req, res)
 })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000

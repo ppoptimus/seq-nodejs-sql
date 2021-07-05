@@ -27,12 +27,11 @@ const saveRequestDetail = (req, res) => {
 				return res.status(501).json({ message: "error", description: err.originalError.message })
 			}
 			else{
-				console.log(result.recordset[0].result)
 				if(result.recordset[0].result == "exists"){
-					saveLog("Save new Request", "pass", "exists data request", null, "request_detail", req.body.create_by, req.body.ip_address)
+					saveLog("Save new Request", "pass", "exists data request", null, "t_trans_request_detail", req.body.create_by, req.body.ip_address)
 					return res.status(200).json(result.recordset[0])
 				}
-				saveLog("Save new Request", "success", null, null, "request_detail", req.body.create_by, req.body.ip_address)
+				saveLog("Save new Request", "success", null, null, "t_trans_request_detail", req.body.create_by, req.body.ip_address)
 				res.status(204).json(result.recordset[0])
 			}
 			
