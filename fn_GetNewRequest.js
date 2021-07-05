@@ -11,17 +11,10 @@ const getRequestDetail = (req, res) => {
 
 	//#region ---ตัวอย่าง Call store with query string ---------//
 	//-----------------create query string -------------------//
-	const from_date = req.body.from_date === null ? null : req.body.from_date.toString()
-	const to_date = req.body.to_date === null ? null : req.body.to_date.toString()
-	const request_status = req.body.request_status
 	const department_code = req.body.department_code
 	const ip_address = req.body.ip_address === null ? null : req.body.ip_address.toString()
 	const user_name = req.body.user_name === null ? null : req.body.user_name.toString()
-	const qryString = `EXEC [dbo].[sp_get_new_request]
-    @from_date = '${from_date}',
-    @to_date = '${to_date}',
-	@request_status = ${request_status},
-    @department_code = ${department_code}`
+	const qryString = `EXEC [dbo].[sp_get_new_request] @department_code = ${department_code}`
     //#endregion ---------- query string -----------------//
 
 	log_event = "getRequestDetail"

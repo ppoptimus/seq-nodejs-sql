@@ -11,7 +11,7 @@ const saveLog = (log_event, log_result, log_description, error_description, rela
 		request.input("related_table", sql.VarChar(50), related_table)
 		request.input("create_by", sql.VarChar(50), create_by)
 		request.input("ip_address", sql.VarChar(50), ip_address)
-		request.execute("sp_insert_log_event")
+		request.execute("sp_save_log_event")
 	})
 }
 
