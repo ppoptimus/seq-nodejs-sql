@@ -5,7 +5,7 @@ const saveLog = require("./fn_SaveLog")
 const saveDocumentSet = (req, res) => {
     sql.connect(config, (err) => {
         if(err){
-            saveLog("saveDocumentSet", "error", "sql connect", err.originalError.message, null, req.body.action_by, req.body.ip_address)
+            saveLog("saveDocumentSet", "error", "sql connect", err.originalError.message, null, req.body.user_name, req.body.ip_address)
             return res.status(400).json({ message: "error", description: err.originalError.message })
         }
 
@@ -20,11 +20,11 @@ const saveDocumentSet = (req, res) => {
             }
             else{
                 if(result.recordset[0].result == "exists"){
-					saveLog("saveDocumentSet", "pass", "exists document No.", null, "t_trans_request", req.body.create_by, req.body.ip_address)
+					saveLog("saveDocumentSet", "pass", "exists document No.", null, "t_trans_request", req.body.user_name, req.body.ip_address)
 					return res.status(200).json(result.recordset[0])
 				}
 
-                saveLog("saveDocumentSet", "success", result.returnValue, null, "sp_stamp_document_set", req.body.user_name, req.body.ip_address)
+                saveLog("saveDocumentSet", "success", 'request code = '+ req.body.request_code, null, "sp_stamp_document_set", req.body.user_name, req.body.ip_address)
                 res.status(204).json(result.recordset[0])
             }
         })

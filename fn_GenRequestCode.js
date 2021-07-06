@@ -5,7 +5,7 @@ const saveLog = require("./fn_SaveLog")
 const generateRequestCode = (req, res) => {
     sql.connect(config, (err) => {
         if(err){
-            saveLog("generateRequestCode", "error", "sql connect", err.originalError.message, null, req.body.action_by, req.body.ip_address)
+            saveLog("generateRequestCode", "error", "sql connect", err.originalError.message, null, req.body.user_name, req.body.ip_address)
             return res.status(400).json({ message: "error", description: err.originalError.message })
         }
         

@@ -19,25 +19,24 @@ const saveRequestDetail = (req, res) => {
 		request.input("remark", sql.NVarChar(255), req.body.remark)
 		request.input("department_code", sql.NVarChar(10), req.body.department_code)
 		request.input("create_by", sql.NVarChar(50), req.body.create_by)
-		request.input("ip_address", sql.NVarChar(20), req.body.ip_address)
 		request.input("is_confirm", sql.Int, req.body.is_confirm)
 		request.execute("sp_save_new_request", (err, result) => {
 			if (err) {
-				saveLog("Save new Request", "error", "request body", err.originalError.message, null, req.body.create_by, req.body.ip_address)
+				saveLog("Save new Request", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
 				return res.status(501).json({ message: "error", description: err.originalError.message })
 			}
 			else{
 				if(result.recordset[0].result == "exists"){
-					saveLog("Save new Request", "pass", "exists data request", null, "t_trans_request_detail", req.body.create_by, req.body.ip_address)
+					saveLog("Save new Request", "pass", "exists data request", null, "t_trans_request_detail", req.body.user_name, req.body.ip_address)
 					return res.status(200).json(result.recordset[0])
 				}
-				saveLog("Save new Request", "success", null, null, "t_trans_request_detail", req.body.create_by, req.body.ip_address)
+				saveLog("Save new Request", "success", null, null, "t_trans_request_detail", req.body.user_name, req.body.ip_address)
 				res.status(204).json(result.recordset[0])
 			}
 			
 		})
 		if (err) {
-			saveLog("Save new Request", "error", "sql, connection", err.originalError.message, null, req.body.create_by, req.body.ip_address)
+			saveLog("Save new Request", "error", "sql, connection", err.originalError.message, null, req.body.user_name, req.body.ip_address)
 			return res.status(400).json({ message: "error", description: err.originalError.message })
 		}
 	})

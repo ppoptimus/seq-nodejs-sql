@@ -13,6 +13,7 @@ const getUserLevel = require("./fn_GetUserLevel")
 const changeRequestStatus = require("./fn_ChangeRequestStatus")
 const generateRequestCode = require("./fn_GenRequestCode")
 const saveDocumentSet = require("./fn_SaveDocumentSet")
+const stampExport = require("./fn_stamp_export")
 
 //-------Declare function -------//
 const app = express()
@@ -94,6 +95,11 @@ app.post("/api/autoGenerateCode", (req, res) => {
 app.post("/api/saveDocumentSet", (req, res) => {
 	saveDocumentSet(req, res)
 })
+
+app.post("/api/stampExport", (req, res) => {
+	stampExport(req, res);
+})
+
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
 app.listen(port, () => {
