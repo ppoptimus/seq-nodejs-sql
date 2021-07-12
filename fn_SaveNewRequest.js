@@ -11,6 +11,7 @@ const saveRequestDetail = (req, res) => {
 		request.input("document_date", sql.NVarChar(20), req.body.document_date)
 		request.input("refference_id", sql.NVarChar(20), req.body.refference_id)
 		request.input("title_code", sql.NVarChar(10), req.body.title_code)
+		request.input("is_foreigner", sql.NVarChar(10), req.body.title_code)
 		request.input("fisrt_name", sql.NVarChar(50), req.body.fisrt_name)
 		request.input("last_name", sql.NVarChar(50), req.body.last_name)
 		request.input("company_name", sql.NVarChar(100), req.body.company_name)
@@ -19,6 +20,7 @@ const saveRequestDetail = (req, res) => {
 		request.input("remark", sql.NVarChar(255), req.body.remark)
 		request.input("department_code", sql.NVarChar(10), req.body.department_code)
 		request.input("create_by", sql.NVarChar(50), req.body.create_by)
+		request.input("ip_address", sql.NVarChar(20), req.body.ip_address)
 		request.input("is_confirm", sql.Int, req.body.is_confirm)
 		request.execute("sp_save_new_request", (err, result) => {
 			if (err) {

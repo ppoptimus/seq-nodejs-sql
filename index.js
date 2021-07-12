@@ -14,6 +14,7 @@ const changeRequestStatus = require("./fn_ChangeRequestStatus")
 const generateRequestCode = require("./fn_GenRequestCode")
 const saveDocumentSet = require("./fn_SaveDocumentSet")
 const stampExport = require("./fn_stamp_export")
+const editNewRequest = require("./fn_EditNewRequest")
 
 //-------Declare function -------//
 const app = express()
@@ -23,7 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 const requestStart = Date.now();
 
 //------- Test connection -------//
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
 	testConnect(req,res)
 })
 
@@ -98,6 +99,10 @@ app.post("/api/saveDocumentSet", (req, res) => {
 
 app.post("/api/stampExport", (req, res) => {
 	stampExport(req, res);
+})
+
+app.post("/api/editNewRequest", (req, res) => {
+	editNewRequest(req, res);
 })
 
 //------------------------------------------------------------------------------------------------------//
