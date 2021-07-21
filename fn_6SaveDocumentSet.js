@@ -12,6 +12,7 @@ const saveDocumentSet = (req, res) => {
         let request = new sql.Request()
         request.input("request_code", sql.NVarChar(20), req.body.request_code)
 		request.input("document_set_no", sql.NVarChar(20), req.body.document_set_no)
+        request.input("document_set_date", sql.NVarChar(20), req.body.document_set_date)
         request.input("user_name", sql.NVarChar(20), req.body.user_name)
         request.execute("sp_save_document_set", (err, result) => {
             if(err){

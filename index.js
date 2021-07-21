@@ -4,6 +4,9 @@ const cors = require("cors")
 const bodyParser = require("body-parser")
 
 //------Call another page -------//
+const saveLog = require("./fn_SaveLog")
+const getUserDetail = require("./fn_GetUserDetail")
+const getUserLevel = require("./fn_GetUserLevel")
 const testConnect = require("./fn_0CheckConnect")
 const saveRequestDetail = require("./fn_1SaveNewRequest")
 const getRequestDetail = require("./fn_2GetNewRequest")
@@ -11,10 +14,8 @@ const changeRequestStatus = require("./fn_3ChangeRequestStatus")
 const editNewRequest = require("./fn_4EditNewRequest")
 const generateRequestCode = require("./fn_5GenRequestCode")
 const saveDocumentSet = require("./fn_6SaveDocumentSet")
-const stampExport = require("./fn_7Stamp_export")
-const saveLog = require("./fn_SaveLog")
-const getUserDetail = require("./fn_GetUserDetail")
-const getUserLevel = require("./fn_GetUserLevel")
+const getExport = require("./fn_7GetDataToExport")
+const stampExport = require("./fn_8Stamp_export")
 
 //-------Declare function -------//
 const app = express()
@@ -103,6 +104,10 @@ app.post("/api/stampExport", (req, res) => {
 
 app.post("/api/editNewRequest", (req, res) => {
 	editNewRequest(req, res);
+})
+
+app.post("/api/getDataToExport", (req, res) => {
+	getExport(req, res);
 })
 
 //------------------------------------------------------------------------------------------------------//

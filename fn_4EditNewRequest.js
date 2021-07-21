@@ -16,7 +16,7 @@ const editNewRequest = (req, res) => {
             request.input("employer_account", sql.NVarChar(10), req.body.employer_account)
             request.input("refference_id", sql.NVarChar(20), req.body.refference_id)
             request.input("title_code", sql.NVarChar(10), req.body.title_code)
-            request.input("fisrt_name", sql.NVarChar(50), req.body.fisrt_name)
+            request.input("first_name", sql.NVarChar(50), req.body.first_name)
             request.input("last_name", sql.NVarChar(50), req.body.last_name)
             request.input("company_name", sql.NVarChar(100), req.body.company_name)
             request.input("birth_date", sql.NVarChar(20), req.body.birth_date)
