@@ -10,8 +10,6 @@ const generateRequestCode = (req, res) => {
         }
         
         let request = new sql.Request()
-        request.input("min_count", sql.NVarChar(20), req.body.min_count)
-		request.input("max_count", sql.Int, req.body.max_count)
         request.execute("dbo.sp_auto_generate_code", (err, result) => {
             if(err){
                 saveLog("generateRequestCode", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
