@@ -14,7 +14,7 @@ const changeRequestStatus = require("./fn_3ChangeRequestStatus")
 const editNewRequest = require("./fn_4EditNewRequest")
 const generateRequestCode = require("./fn_5GenRequestCode")
 const saveDocumentSet = require("./fn_6SaveDocumentSet")
-const getExport = require("./fn_7GetDataToExport")
+const getDataToExport = require("./fn_7GetDataToExport")
 const stampExport = require("./fn_8Stamp_export")
 
 //-------Declare function -------//
@@ -107,7 +107,7 @@ app.post("/api/editNewRequest", (req, res) => {
 })
 
 app.post("/api/getDataToExport", (req, res) => {
-	getExport(req, res);
+	getDataToExport(req, res)
 })
 
 //------------------------------------------------------------------------------------------------------//

@@ -11,6 +11,7 @@ const saveRequestDetail = (req, res) => {
 		request.input("document_date", sql.NVarChar(20), req.body.document_date)
 		request.input("refference_id", sql.NVarChar(20), req.body.refference_id)
 		request.input("title_code", sql.NVarChar(10), req.body.title_code)
+		request.input("personal_type", sql.Int, req.body.personal_type)
 		request.input("is_foreigner", sql.NVarChar(10), req.body.title_code)
 		request.input("first_name", sql.NVarChar(50), req.body.first_name)
 		request.input("last_name", sql.NVarChar(50), req.body.last_name)
