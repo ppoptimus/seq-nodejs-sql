@@ -2,10 +2,9 @@ const sql = require("mssql")
 const config = require("./dbConfig")
 const saveLog = require("./fn_SaveLog")
 const xlsx = require("xlsx")
-const fs = require("fs")
+const {existsSync, mkdirSync} = require("fs")
 const fsExtra = require("fs-extra")
 const archiver = require("archiver")
-const getAllBank = require("./fn_get_all_banks")
 
 const getExport = async (req, res) => {
 	sql.connect(config, (err) => {
@@ -31,25 +30,40 @@ const getExport = async (req, res) => {
 						req.body.ip_address
 					)
 					try {
-						let dirName = `SSO_${req.body.request_code}_Bank`
-						let dir = `${dirName}`
+						let dirNameZip = `SSO_${req.body.request_code}_Bank`
+						
 
-						//------------step1 Create directory------------//
-						createDir(dir)
-						//-----------step2 Generate excel file---------//
 
-						// if (genearteExcel(result.recordset)) {
-						// 	console.log(genearteExcel)
-						// 	//-----------step3 Zip dierectory--------------//
-						// 	zipDirectory(`./tmp/${dir}`, `./tmp/${dirName}.zip`)
-						// } else {
-						// 	console.log(genearteExcel)
-						// }
-	
-						getAllBank();
+						//------------step1 Create folder------------//
+						createDirZip(dirNameZip)
+
+						//------------get bank code---------------------//
+						let request = new sql.Request()
+						request.execute("sp_get_bank_code", (err, bankCode) => {					
+							bankCode.recordset.forEach(obj => {
+								Object.entries(obj).forEach(([key, value]) => {
+
+									let dirBank = `SSO_${value}_${req.body.request_code}`
+									if (existsSync(`./tmp/${dirNameZip}`)){
+
+										//-----------step2 create sup folder---------//
+										createDirBank(dirNameZip,dirBank)
+
+										//-----------step3 Generate excel file---------//
+										genearteExcel(result.recordset, dirNameZip, dirBank, dirBank)
+										//console.log("new")
+									}
+									
+								});
+							});
+							
+						})
+
+						//-----------step4 Zip dierectory--------------//
+
 						return res.status(200).json(result.recordset)
 					} catch (error) {
-						return res.status(501).json({ message: "error", description: error })
+						return res.status(501).json({ message: "error", description: error + "step try" })
 					}
 				}
 			})
@@ -57,21 +71,24 @@ const getExport = async (req, res) => {
 	})
 }
 
-const createDir = async (dir) => {
-	await fsExtra.emptyDirSync("./tmp")
-	fs.mkdirSync(`./tmp/${dir}`)
+const createDirZip = (dir) => {
+	fsExtra.emptyDirSync("./tmp")
+	mkdirSync(`./tmp/${dir}`)
 }
 
-const genearteExcel = (content, fileName) => {
+const createDirBank = (dirZip, dirBank) => {
+	mkdirSync(`./tmp/${dirZip}/${dirBank}`)
+}
+
+const genearteExcel = (content, folderZip, folderBank, fileName) => {
 	try {
 		let newWorkbook = xlsx.utils.book_new()
 		let newWorksheet = xlsx.utils.json_to_sheet(content)
 		xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, fileName)
-		xlsx.writeFile(newWorkbook, "./tmp/newExcel.xlsx")
+		xlsx.writeFile(newWorkbook, `./tmp/${folderZip}/${folderBank}/${fileName}.xlsx`)
 	} catch (error) {
 		throw error
 	}
-
 }
 
 function zipDirectory(source, out) {
