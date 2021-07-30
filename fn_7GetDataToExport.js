@@ -2,7 +2,7 @@ const sql = require("mssql")
 const config = require("./dbConfig")
 const saveLog = require("./fn_SaveLog")
 const xlsx = require("xlsx")
-const {existsSync, mkdirSync} = require("fs")
+const {existsSync, mkdirSync, createWriteStream} = require("fs")
 const fsExtra = require("fs-extra")
 const archiver = require("archiver")
 
@@ -51,7 +51,9 @@ const getExport = async (req, res) => {
 
 										//-----------step3 Generate excel file---------//
 										genearteExcel(result.recordset, dirNameZip, dirBank, dirBank)
-										//console.log("new")
+										// console.log(dirNameZip + " " + dirBank)
+										//-----------step4 Zip dierectory--------------//
+										zipDirectory(`./tmp/${dirNameZip}`,`./tmp/${dirNameZip}`)
 									}
 									
 								});
@@ -59,7 +61,6 @@ const getExport = async (req, res) => {
 							
 						})
 
-						//-----------step4 Zip dierectory--------------//
 
 						return res.status(200).json(result.recordset)
 					} catch (error) {
@@ -72,6 +73,7 @@ const getExport = async (req, res) => {
 }
 
 const createDirZip = (dir) => {
+	if(!existsSync('./tmp')){mkdirSync('./tmp')}
 	fsExtra.emptyDirSync("./tmp")
 	mkdirSync(`./tmp/${dir}`)
 }
@@ -91,9 +93,9 @@ const genearteExcel = (content, folderZip, folderBank, fileName) => {
 	}
 }
 
-function zipDirectory(source, out) {
+const zipDirectory = (source, out) => {
 	const archive = archiver("zip", { zlib: { level: 9 } })
-	const stream = fs.createWriteStream(out)
+	const stream = createWriteStream(`${out}.zip`)
 
 	return new Promise((resolve, reject) => {
 		archive
