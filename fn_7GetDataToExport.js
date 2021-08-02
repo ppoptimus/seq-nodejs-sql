@@ -2,7 +2,7 @@ const sql = require("mssql")
 const config = require("./dbConfig")
 const saveLog = require("./fn_SaveLog")
 const xlsx = require("xlsx")
-const {existsSync, mkdirSync, createWriteStream} = require("fs")
+const { existsSync, mkdirSync, createWriteStream, appendFile, read } = require("fs")
 const fsExtra = require("fs-extra")
 const archiver = require("archiver")
 
@@ -31,36 +31,30 @@ const getExport = async (req, res) => {
 					)
 					try {
 						let dirNameZip = `SSO_${req.body.request_code}_Bank`
-						
-
 
 						//------------step1 Create folder------------//
 						createDirZip(dirNameZip)
 
 						//------------get bank code---------------------//
 						let request = new sql.Request()
-						request.execute("sp_get_bank_code", (err, bankCode) => {					
-							bankCode.recordset.forEach(obj => {
+						request.execute("sp_get_bank_code", (err, bankCode) => {
+							bankCode.recordset.forEach((obj) => {
 								Object.entries(obj).forEach(([key, value]) => {
-
 									let dirBank = `SSO_${value}_${req.body.request_code}`
-									if (existsSync(`./tmp/${dirNameZip}`)){
-
+									if (existsSync(`./tmp/${dirNameZip}`)) {
 										//-----------step2 create sup folder---------//
-										createDirBank(dirNameZip,dirBank)
+										createDirBank(dirNameZip, dirBank)
 
 										//-----------step3 Generate excel file---------//
 										genearteExcel(result.recordset, dirNameZip, dirBank, dirBank)
-										// console.log(dirNameZip + " " + dirBank)
+										generateText(result.recordset, dirNameZip, dirBank, dirBank)
+										
 										//-----------step4 Zip dierectory--------------//
-										zipDirectory(`./tmp/${dirNameZip}`,`./tmp/${dirNameZip}`)
+										zipDirectory(`./tmp/${dirNameZip}`, `./tmp/${dirNameZip}`)
 									}
-									
-								});
-							});
-							
+								})
+							})
 						})
-
 
 						return res.status(200).json(result.recordset)
 					} catch (error) {
@@ -73,7 +67,9 @@ const getExport = async (req, res) => {
 }
 
 const createDirZip = (dir) => {
-	if(!existsSync('./tmp')){mkdirSync('./tmp')}
+	// if (!existsSync("./tmp")) {
+	// 	mkdirSync("./tmp")
+	// }
 	fsExtra.emptyDirSync("./tmp")
 	mkdirSync(`./tmp/${dir}`)
 }
@@ -90,6 +86,27 @@ const genearteExcel = (content, folderZip, folderBank, fileName) => {
 		xlsx.writeFile(newWorkbook, `./tmp/${folderZip}/${folderBank}/${fileName}.xlsx`)
 	} catch (error) {
 		throw error
+	}
+}
+
+const generateText = (content, folderZip, folderBank, fileName) => {
+	
+	for (let i = 0; i < content.length; i++) {
+		let str =
+			content[i].request_code +
+			content[i].document_set_no +
+			content[i].document_set_date +
+			content[i].employer_account +
+			content[i].title_name +
+			content[i].first_name +
+			content[i].last_name +
+			content[i].refference_id +
+			content[i].birth_date +
+			content[i].address
+		// console.log(str)
+		appendFile(`./tmp/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
+		if(err){throw err}
+	})
 	}
 }
 
