@@ -79,9 +79,14 @@ const createDirBank = (dirZip, dirBank) => {
 }
 
 const genearteExcel = (content, folderZip, folderBank, fileName) => {
+	var Heading = [
+		["เลขที่ชุดข้อมูล", "เลขที่หนังสือ", "วันที่หนังสือ", "เลขที่บัญชีนายจ้าง", "คำนำหน้าชื่อ/ประเภทธุรกิจ", "ชื่อ", "สกุล", "เลขประจำตัวประชาชน/เลขทะเบียนพาณิชย์", "วัน เดือน ปี เกิด", "ที่อยู่"],
+	  ];
 	try {
 		let newWorkbook = xlsx.utils.book_new()
-		let newWorksheet = xlsx.utils.json_to_sheet(content)
+		let newWorksheet = xlsx.utils.json_to_sheet(Heading, {skipHeader: true})
+		xlsx.utils.sheet_add_json(newWorksheet, content, { skipHeader: true, origin: -1});
+
 		xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, fileName)
 		xlsx.writeFile(newWorkbook, `./tmp/${folderZip}/${folderBank}/${fileName}.xlsx`)
 	} catch (error) {
