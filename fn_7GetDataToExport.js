@@ -109,7 +109,6 @@ const generateText = (content, folderZip, folderBank, fileName) => {
 			content[i].refference_id +
 			content[i].birth_date +
 			content[i].address
-		// console.log(str)
 		appendFile(`${path}/tmp/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
 		if(err){throw err}
 	})
