@@ -6,6 +6,7 @@ const { existsSync, mkdirSync, createWriteStream, appendFile, read } = require("
 const fsExtra = require("fs-extra")
 const archiver = require("archiver")
 
+const path = "C:"
 const getExport = async (req, res) => {
 	sql.connect(config, (err) => {
 		if (err) {
@@ -41,7 +42,7 @@ const getExport = async (req, res) => {
 							bankCode.recordset.forEach((obj) => {
 								Object.entries(obj).forEach(([key, value]) => {
 									let dirBank = `SSO_${value}_${req.body.request_code}`
-									if (existsSync(`./tmp/${dirNameZip}`)) {
+									if (existsSync(`${path}/tmp/${dirNameZip}`)) {
 										//-----------step2 create sup folder---------//
 										createDirBank(dirNameZip, dirBank)
 
@@ -50,7 +51,7 @@ const getExport = async (req, res) => {
 										generateText(result.recordset, dirNameZip, dirBank, dirBank)
 										
 										//-----------step4 Zip dierectory--------------//
-										zipDirectory(`./tmp/${dirNameZip}`, `./tmp/${dirNameZip}`)
+										zipDirectory(`${path}/tmp/${dirNameZip}`, `${path}/tmp/${dirNameZip}`)
 									}
 								})
 							})
@@ -70,12 +71,12 @@ const createDirZip = (dir) => {
 	// if (!existsSync("./tmp")) {
 	// 	mkdirSync("./tmp")
 	// }
-	fsExtra.emptyDirSync("./tmp")
-	mkdirSync(`./tmp/${dir}`)
+	fsExtra.emptyDirSync(`${path}/tmp`)
+	mkdirSync(`${path}/tmp/${dir}`)
 }
 
 const createDirBank = (dirZip, dirBank) => {
-	mkdirSync(`./tmp/${dirZip}/${dirBank}`)
+	mkdirSync(`${path}/tmp/${dirZip}/${dirBank}`)
 }
 
 const genearteExcel = (content, folderZip, folderBank, fileName) => {
@@ -88,7 +89,7 @@ const genearteExcel = (content, folderZip, folderBank, fileName) => {
 		xlsx.utils.sheet_add_json(newWorksheet, content, { skipHeader: true, origin: -1});
 
 		xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, fileName)
-		xlsx.writeFile(newWorkbook, `./tmp/${folderZip}/${folderBank}/${fileName}.xlsx`)
+		xlsx.writeFile(newWorkbook, `${path}/tmp/${folderZip}/${folderBank}/${fileName}.xlsx`)
 	} catch (error) {
 		throw error
 	}
@@ -109,7 +110,7 @@ const generateText = (content, folderZip, folderBank, fileName) => {
 			content[i].birth_date +
 			content[i].address
 		// console.log(str)
-		appendFile(`./tmp/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
+		appendFile(`${path}/tmp/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
 		if(err){throw err}
 	})
 	}
