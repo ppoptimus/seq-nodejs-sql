@@ -27,7 +27,7 @@ const getUserDetail = (req, res) => {
                 if(err){
                     res.status(501).json({ message: "error", description: err.originalError.message })
                 }
-                res.status(200).json(result.recordset[0])
+                res.status(200).json(result.recordset)
             })
         }
         

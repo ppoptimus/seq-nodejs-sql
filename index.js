@@ -16,6 +16,8 @@ const generateRequestCode = require("./fn_5GenRequestCode")
 const saveDocumentSet = require("./fn_6SaveDocumentSet")
 const getDataToExport = require("./fn_7GetDataToExport")
 const stampExport = require("./fn_8Stamp_export")
+const DownloadFile = require("./fn_DownloadFile")
+const ImportBank = require("./fn_importbank")
 
 //-------Declare function -------//
 const app = express()
@@ -107,9 +109,18 @@ app.post("/api/editNewRequest", (req, res) => {
 })
 
 app.post("/api/getDataToExport", (req, res) => {
+	console.log('get')
 	getDataToExport(req, res)
 })
 
+app.get('/api/download', (req, res) => {
+	console.log('load')
+	DownloadFile(req, res)
+  });
+
+  app.post('/api/importbank', (req, res) => {
+	ImportBank(req, res)
+  })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
 app.listen(port, () => {

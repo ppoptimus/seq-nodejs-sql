@@ -6,7 +6,6 @@ const { existsSync, mkdirSync, createWriteStream, appendFile, read } = require("
 const fsExtra = require("fs-extra")
 const archiver = require("archiver")
 
-const path = "C:"
 const getExport = async (req, res) => {
 	sql.connect(config, (err) => {
 		if (err) {
@@ -42,7 +41,7 @@ const getExport = async (req, res) => {
 							bankCode.recordset.forEach((obj) => {
 								Object.entries(obj).forEach(([key, value]) => {
 									let dirBank = `SSO_${value}_${req.body.request_code}`
-									if (existsSync(`${path}/tmp/${dirNameZip}`)) {
+									if (existsSync(`public/${dirNameZip}`)) {
 										//-----------step2 create sup folder---------//
 										createDirBank(dirNameZip, dirBank)
 
@@ -51,13 +50,13 @@ const getExport = async (req, res) => {
 										generateText(result.recordset, dirNameZip, dirBank, dirBank)
 										
 										//-----------step4 Zip dierectory--------------//
-										zipDirectory(`${path}/tmp/${dirNameZip}`, `${path}/tmp/${dirNameZip}`)
+										zipDirectory(`public/${dirNameZip}`, `public/${dirNameZip}`)
 									}
 								})
 							})
 						})
 
-						return res.status(200).json(result.recordset)
+						return res.status(204).json(result.recordset[0])
 					} catch (error) {
 						return res.status(501).json({ message: "error", description: error + "step try" })
 					}
@@ -68,15 +67,15 @@ const getExport = async (req, res) => {
 }
 
 const createDirZip = (dir) => {
-	// if (!existsSync("./tmp")) {
-	// 	mkdirSync("./tmp")
+	// if (!existsSync(".public")) {
+	// 	mkdirSync(".public")
 	// }
-	fsExtra.emptyDirSync(`${path}/tmp`)
-	mkdirSync(`${path}/tmp/${dir}`)
+	fsExtra.emptyDirSync(`public`)
+	mkdirSync(`public/${dir}`)
 }
 
 const createDirBank = (dirZip, dirBank) => {
-	mkdirSync(`${path}/tmp/${dirZip}/${dirBank}`)
+	mkdirSync(`public/${dirZip}/${dirBank}`)
 }
 
 const genearteExcel = (content, folderZip, folderBank, fileName) => {
@@ -89,7 +88,7 @@ const genearteExcel = (content, folderZip, folderBank, fileName) => {
 		xlsx.utils.sheet_add_json(newWorksheet, content, { skipHeader: true, origin: -1});
 
 		xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, fileName)
-		xlsx.writeFile(newWorkbook, `${path}/tmp/${folderZip}/${folderBank}/${fileName}.xlsx`)
+		xlsx.writeFile(newWorkbook, `public/${folderZip}/${folderBank}/${fileName}.xlsx`)
 	} catch (error) {
 		throw error
 	}
@@ -109,7 +108,7 @@ const generateText = (content, folderZip, folderBank, fileName) => {
 			content[i].refference_id +
 			content[i].birth_date +
 			content[i].address
-		appendFile(`${path}/tmp/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
+		appendFile(`public/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
 		if(err){throw err}
 	})
 	}
