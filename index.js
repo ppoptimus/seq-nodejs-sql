@@ -16,8 +16,8 @@ const generateRequestCode = require("./fn_5GenRequestCode")
 const saveDocumentSet = require("./fn_6SaveDocumentSet")
 const getDataToExport = require("./fn_7GetDataToExport")
 const stampExport = require("./fn_8Stamp_export")
+const ImportBank = require("./fn_9importbank")
 const DownloadFile = require("./fn_DownloadFile")
-const ImportBank = require("./fn_importbank")
 
 //-------Declare function -------//
 const app = express()
