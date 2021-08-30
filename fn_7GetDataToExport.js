@@ -15,7 +15,7 @@ const getExport = async (req, res) => {
 			let request = new sql.Request()
 			request.input("request_code", sql.NVarChar(10), req.body.request_code)
 			request.input("document_set_no", sql.NVarChar(50), req.body.document_set_no)
-			request.execute("sp_get_export_request", (err, result) => {
+			request.execute("sp_get_data_to_export", (err, result) => {
 				if (err) {
 					saveLog("export request", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
 					return res.status(501).json({ message: "error", description: err.originalError.message })

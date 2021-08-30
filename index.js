@@ -92,7 +92,7 @@ app.post("/api/changeRequestStatus", (req, res) => {
 	changeRequestStatus(req, res);
 })
 
-app.post("/api/autoGenerateCode", (req, res) => {
+app.get("/api/autoGenerateCode", (req, res) => {
 	generateRequestCode(req, res);
 })
 
