@@ -18,6 +18,7 @@ const getDataToExport = require("./fn_7GetDataToExport")
 const stampExport = require("./fn_8Stamp_export")
 const ImportBank = require("./fn_9importbank")
 const DownloadFile = require("./fn_DownloadFile")
+const searchRequest = require("./fn_10getSearchRequest")
 
 //-------Declare function -------//
 const app = express()
@@ -120,6 +121,10 @@ app.get('/api/download', (req, res) => {
 
   app.post('/api/importbank', (req, res) => {
 	ImportBank(req, res)
+  })
+
+  app.post('/api/searchRequest', (req, res) => {
+	  searchRequest(req, res)
   })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000

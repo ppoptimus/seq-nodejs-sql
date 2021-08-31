@@ -2,7 +2,7 @@ const sql = require("mssql")
 const config = require("./dbConfig")
 const saveLog = require("./fn_SaveLog")
 const xlsx = require("xlsx")
-const { existsSync, mkdirSync, createWriteStream, appendFile, read } = require("fs")
+const { existsSync, mkdirSync, createWriteStream, appendFile } = require("fs")
 const fsExtra = require("fs-extra")
 const archiver = require("archiver")
 

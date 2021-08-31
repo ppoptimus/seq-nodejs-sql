@@ -30,7 +30,6 @@ const ImportBank = (req, res) => {
 			{
 				table.rows.add(req.body.request_code, req.body.document_set, req.body.bank_code, r.document_date, r.employer_account, r.title_name, r.first_name, r.last_name, r.refference_id, r.branch_code, r.status_code, r.branch_name, r.account_no, r.account_name, r.balance, r.investigate_date, r.remark);
 			}
-			console.log(table)
 			request.input("request_code", sql.NVarChar(10), req.body.request_code)
 			request.input("document_set", sql.NVarChar(20), req.body.document_set)
 			request.input("user_name", sql.NVarChar(50), req.body.user_name)
@@ -38,13 +37,13 @@ const ImportBank = (req, res) => {
 			request.execute("sp_save_import", (err, result) => {
 				if(err){
 
-					console.log(err)
+					saveLog("Import file", "error", "execute store", err.originalError, null, req.body.user_name, req.body.ip_address)
 				}
-				else{console.log(result.recordsets)}
+				else{return res.status(201).json(result.recordset[0])}
 			})
 			return res.status(200).json(table)
 		} catch (err) {
-			// saveLog("Import file", "error", "request body", err.originalError, null, req.body.user_name, req.body.ip_address)
+			saveLog("Import file", "error", "request body", err.originalError, null, req.body.user_name, req.body.ip_address)
 			return res.status(501).json({ message: "error", description: err })
 		}
 	})
