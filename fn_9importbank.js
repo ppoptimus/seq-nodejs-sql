@@ -41,7 +41,7 @@ const ImportBank = (req, res) => {
 				}
 				else{return res.status(201).json(result.recordset[0])}
 			})
-			return res.status(200).json(table)
+			
 		} catch (err) {
 			saveLog("Import file", "error", "request body", err.originalError, null, req.body.user_name, req.body.ip_address)
 			return res.status(501).json({ message: "error", description: err })
