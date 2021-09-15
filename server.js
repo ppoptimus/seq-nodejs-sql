@@ -19,12 +19,15 @@ const stampExport = require("./fn_8Stamp_export")
 const ImportBank = require("./fn_9importbank")
 const DownloadFile = require("./fn_DownloadFile")
 const searchRequest = require("./fn_10getSearchRequest")
+const getTitle = require("./fn_GetTitle")
 
 //-------Declare function -------//
 const app = express()
 app.use(cors())
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
+// app.use(bodyParser.json())
+// app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json({limit: "50mb"}));
+app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 const requestStart = Date.now()
 
 //------- Test connection -------//
@@ -122,6 +125,9 @@ app.get("/api/getUserLevel", (req, res) => {
 	getUserLevel(req, res)
 })
 
+app.get("/api/getTitle", (req, res) => {
+	getTitle(req, res)
+})
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 3000
 app.listen(port, () => {
