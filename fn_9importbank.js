@@ -5,44 +5,42 @@ const saveLog = require("./fn_SaveLog")
 const ImportBank = (req, res) => {
 	sql.connect(config, () => {
 		try {
-			let request = new sql.Request()
-			let table = new sql.Table()
-			table.columns.add("request_code", sql.NVarChar(10), null)
-			table.columns.add("document_set", sql.NVarChar(20))
-			table.columns.add("bank_code", sql.NVarChar(10))
-			table.columns.add("document_date", sql.NVarChar(10))
-			table.columns.add("employer_account", sql.NVarChar(10))
-			table.columns.add("title_name", sql.NVarChar(50))
-			table.columns.add("first_name", sql.NVarChar(20))
-			table.columns.add("last_name", sql.NVarChar(50))
-			table.columns.add("refference_id", sql.NVarChar(20))
-			table.columns.add("branch_code", sql.NVarChar(10))
-			table.columns.add("status_code", sql.NVarChar(5))
-			table.columns.add("branch_name", sql.NVarChar(100))
-			table.columns.add("account_no", sql.NVarChar(20))
-			table.columns.add("account_name", sql.NVarChar(100))
-			table.columns.add("balance", sql.NVarChar(20))
-			table.columns.add("investigate_date", sql.NVarChar(50))
-			table.columns.add("remark", sql.NVarChar(255))
 
-			
-			for(r of req.body.dataset)
-			{
-				table.rows.add(req.body.request_code, req.body.document_set, req.body.bank_code, r.document_date, r.employer_account, r.title_name, r.first_name, r.last_name, r.refference_id, r.branch_code, r.status_code, r.branch_name, r.account_no, r.account_name, r.balance, r.investigate_date, r.remark);
+			for (let x in req.body.dataset) {
+
+				let request = new sql.Request()
+				request.input("request_code", sql.NVarChar(10), req.body.request_code)
+				request.input("document_set", sql.NVarChar(20), req.body.document_set)
+				request.input("user_name", sql.NVarChar(50), req.body.user_name)
+				request.input("bank_code", sql.NVarChar(10), req.body.bank_code)
+
+				request.input("document_date", sql.NVarChar(20), req.body.dataset[x].document_date)
+				request.input("employer_account", sql.NVarChar(10), req.body.dataset[x].employer_account)
+				request.input("title_name", sql.NVarChar(100), req.body.dataset[x].title_name)
+				request.input("first_name", sql.NVarChar(100), req.body.dataset[x].first_name)
+				request.input("last_name", sql.NVarChar(100), req.body.dataset[x].last_name)
+				request.input("refference_id", sql.NVarChar(20), req.body.dataset[x].refference_id)
+				request.input("branch_code", sql.NVarChar(10), req.body.dataset[x].branch_code)
+				request.input("status_code", sql.NVarChar(5), req.body.dataset[x].status_code)
+				request.input("branch_name", sql.NVarChar(100), req.body.dataset[x].branch_name)
+				request.input("account_no", sql.NVarChar(20), req.body.dataset[x].account_no)
+				request.input("account_name", sql.NVarChar(100), req.body.dataset[x].account_name)
+				request.input("balance", sql.NVarChar(50), req.body.dataset[x].balance)
+				request.input("investigate_date", sql.NVarChar(30), req.body.dataset[x].investigate_date)
+				request.input("remark", sql.NVarChar(2000), req.body.dataset[x].remark)
+				request.execute("sp_save_import", (err, result) => {
+					if (err) {
+						console.log("1  " + err)
+						saveLog("Import file", "error", "execute store", err.originalError, null, req.body.user_name, req.body.ip_address)
+						return res.status(501).json({ message: "error", description: err.originalError.message })
+					}
+					console.log(result.recordset)
+				})
 			}
-			request.input("request_code", sql.NVarChar(10), req.body.request_code)
-			request.input("document_set", sql.NVarChar(20), req.body.document_set)
-			request.input("user_name", sql.NVarChar(50), req.body.user_name)
-			request.input("import_detail", table)
-			request.execute("sp_save_import", (err, result) => {
-				if(err){
-
-					saveLog("Import file", "error", "execute store", err.originalError, null, req.body.user_name, req.body.ip_address)
-				}
-				else{return res.status(201).json(result.recordset[0])}
-			})
+			res.send(200);
 			
 		} catch (err) {
+			console.log("2  " + err)
 			saveLog("Import file", "error", "request body", err.originalError, null, req.body.user_name, req.body.ip_address)
 			return res.status(501).json({ message: "error", description: err })
 		}
