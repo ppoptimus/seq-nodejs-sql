@@ -8,8 +8,11 @@ const checkUserLogin = (req, res) => {
 		}
 
         let request = new sql.Request()
-		request.input("personal_type", sql.NChar(50), req.body.username)
-		request.execute("sp_get_title", (err, result) => {
+		request.input("user_name", sql.NChar(50), req.body.user_name)
+		request.input("first_name", sql.NChar(50), req.body.first_name)
+		request.input("last_name", sql.NChar(50), req.body.last_name)
+		request.input("department_code", sql.NChar(50), req.body.department_code)
+		request.execute("sp_check_user", (err, result) => {
 			if (err) {
 				res.status(501).json({ message: "error", description: err.originalError.message })
 			}
@@ -17,3 +20,5 @@ const checkUserLogin = (req, res) => {
 		})
     })
 }
+
+module.exports = checkUserLogin;

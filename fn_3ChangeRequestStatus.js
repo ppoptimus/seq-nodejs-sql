@@ -12,7 +12,7 @@ const changeRequestStatus = (req, res) => {
 		request.input("new_request_id", sql.Int, req.body.new_request_id)
 		request.input("status_id", sql.Int, req.body.status_id)
         request.input("remark", sql.NVarChar(255), req.body.remark)
-        request.execute("sp_change_request_status_by_id", (err, result) => {
+        request.execute("sp_change_request_status_edit", (err, result) => {
             if(err){
                 saveLog("changeRequestStatus", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
                 return res.status(501).json({ message: "error", description: err.originalError.message })

@@ -16,10 +16,12 @@ const generateRequestCode = require("./fn_5GenRequestCode")
 const saveDocumentSet = require("./fn_6SaveDocumentSet")
 const getDataToExport = require("./fn_7GetDataToExport")
 const stampExport = require("./fn_8Stamp_export")
-const ImportBank = require("./fn_9importbank")
+const ImportBank = require("./fn_9Importbank")
 const DownloadFile = require("./fn_DownloadFile")
-const searchRequest = require("./fn_10getSearchRequest")
+const searchRequest = require("./fn_10GetSearchRequest")
 const getTitle = require("./fn_GetTitle")
+const checkUserLogin = require("./fn_CheckUserLogin")
+const searchRequestDetail = require("./fn_12GetSearchRequestDetail")
 
 //-------Declare function -------//
 const app = express()
@@ -115,6 +117,10 @@ app.post("/api/searchRequest", (req, res) => {
 	searchRequest(req, res)
 })
 
+app.get("/api/searchRequestDetail", (req, res) => {
+	searchRequestDetail(req, res)
+})
+
 //--------------- Get user / user detail  --------------------//
 app.get("/api/getUser", (req, res) => {
 	getUserDetail(req, res)
@@ -127,6 +133,11 @@ app.get("/api/getUserLevel", (req, res) => {
 
 app.get("/api/getTitle", (req, res) => {
 	getTitle(req, res)
+})
+
+//---------check user for update when login ----------//
+app.post("/api/userLogin", (req, res) => {
+	checkUserLogin(req, res)
 })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
