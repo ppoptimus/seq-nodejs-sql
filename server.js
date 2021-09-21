@@ -13,15 +13,16 @@ const getRequestDetail = require("./fn_2GetNewRequest")
 const changeRequestStatus = require("./fn_3ChangeRequestStatus")
 const editNewRequest = require("./fn_4EditNewRequest")
 const generateRequestCode = require("./fn_5GenRequestCode")
-const saveDocumentSet = require("./fn_6SaveDocumentSet")
-const getDataToExport = require("./fn_7GetDataToExport")
-const stampExport = require("./fn_8Stamp_export")
-const ImportBank = require("./fn_9Importbank")
-const DownloadFile = require("./fn_DownloadFile")
-const searchRequest = require("./fn_10GetSearchRequest")
+const getAllRequest = require("./fn_6GetAllRequest")
+const saveDocumentSet = require("./fn_7SaveDocumentSet")
+const getDataToExport = require("./fn_8GetDataToExport")
+const DownloadFile = require("./fn_9DownloadFile")
+const stampExport = require("./fn_10Stamp_export")
+const ImportBank = require("./fn_11Importbank")
+const searchRequest = require("./fn_12GetSearchRequest")
+const searchRequestDetail = require("./fn_13GetSearchRequestDetail")
 const getTitle = require("./fn_GetTitle")
 const checkUserLogin = require("./fn_CheckUserLogin")
-const searchRequestDetail = require("./fn_12GetSearchRequestDetail")
 
 //-------Declare function -------//
 const app = express()
@@ -85,6 +86,10 @@ app.post("/api/changeRequestStatus", (req, res) => {
 
 app.get("/api/autoGenerateCode", (req, res) => {
 	generateRequestCode(req, res)
+})
+
+app.get("/api/getAllRequest", (req, res) => {
+	getAllRequest(req, res)
 })
 
 app.post("/api/saveDocumentSet", (req, res) => {
