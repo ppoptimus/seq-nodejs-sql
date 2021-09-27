@@ -23,6 +23,8 @@ const searchRequest = require("./fn_12GetSearchRequest")
 const searchRequestDetail = require("./fn_13GetSearchRequestDetail")
 const getTitle = require("./fn_GetTitle")
 const checkUserLogin = require("./fn_CheckUserLogin")
+const getAllBank = require("./fn_GetAllBanks")
+const saveMasterBank = require("./fn_SaveMasterBank")
 
 //-------Declare function -------//
 const app = express()
@@ -143,6 +145,14 @@ app.get("/api/getTitle", (req, res) => {
 //---------check user for update when login ----------//
 app.post("/api/userLogin", (req, res) => {
 	checkUserLogin(req, res)
+})
+
+app.get("/api/getAllBank", (req, res) => {
+	getAllBank(req, res)
+})
+
+app.post("/api/saveMasterBank", (req, res) => {
+	saveMasterBank(req, res)
 })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000

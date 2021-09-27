@@ -2,8 +2,8 @@ const sql = require("mssql")
 const config = require("./dbConfig")
 const saveLog = require("./fn_SaveLog")
 
-const getAllBank = () => {
-    let results;
+const getAllBank = (req, res) => {
+    
     sql.connect(config, (err) => {
         if (err) {
 			saveLog("get all banks", "error", "sql connect", err.originalError.message, null, null, null)
@@ -23,8 +23,7 @@ const getAllBank = () => {
 						"t_master_bank",
 						null, null
 					)
-                    results = result.recordset
-                    return result.recordset
+                    res.status(200).json(result.recordset)
                 }
             })
         }
