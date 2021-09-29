@@ -25,6 +25,7 @@ const getTitle = require("./fn_GetTitle")
 const checkUserLogin = require("./fn_CheckUserLogin")
 const getAllBank = require("./fn_GetAllBanks")
 const saveMasterBank = require("./fn_SaveMasterBank")
+const editMasterBank = require("./fn_EditMasterBank")
 
 //-------Declare function -------//
 const app = express()
@@ -153,6 +154,10 @@ app.get("/api/getAllBank", (req, res) => {
 
 app.post("/api/saveMasterBank", (req, res) => {
 	saveMasterBank(req, res)
+})
+
+app.post("/api/editMasterBank", (req, res) => {
+	editMasterBank(req, res)
 })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
