@@ -18,7 +18,7 @@ const editMasterBank = (req, res) => {
                 return res.status(501).json({ message: "error", description: err.originalError.message })
             }
             saveLog("editMasterBank", "success", 'save bank_code = '+ req.body.bank_code, null, "t_master_bank", req.body.user_name, req.body.ip_address)
-            res.status(200).json(result.recordset[0])
+            res.status(204).json(result.recordset[0])
         })
     })
 }
