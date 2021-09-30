@@ -1,6 +1,6 @@
 const sql = require("mssql")
-const config = require("./dbConfig")
-const saveLog = require("./fn_SaveLog")
+const config = require("../dbConfig")
+const saveLog = require("../fn_SaveLog")
 
 const getAllBank = (req, res) => {
     

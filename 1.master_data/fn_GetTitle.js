@@ -1,5 +1,5 @@
 const sql = require("mssql")
-const config = require("./dbConfig")
+const config = require("../dbConfig")
 
 const getTitle = (req, res) => {
 	const personal_type = req.query.type
