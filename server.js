@@ -26,6 +26,7 @@ const ImportBank = require("./2.transaction_data/fn_11Importbank")
 const searchRequest = require("./2.transaction_data/fn_12GetSearchRequest")
 const searchRequestDetail = require("./2.transaction_data/fn_13GetSearchRequestDetail")
 const saveLog = require("./fn_SaveLog")
+const saveMasterUser = require("./1.master_data/fn_SaveMasterUser")
 
 //-------Declare function -------//
 const app = express()
@@ -159,6 +160,11 @@ app.post("/api/saveMasterBank", (req, res) => {
 app.post("/api/editMasterBank", (req, res) => {
 	editMasterBank(req, res)
 })
+
+app.post("/api/saveMasterUser", (req, res) => {
+	saveMasterUser(req, res)
+})
+
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
 app.listen(port, () => {
