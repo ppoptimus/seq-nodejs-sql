@@ -7,7 +7,7 @@ const newsManagement = (req, res) => {
         try {
             let request = new sql.Request()
             
-            request.input("news_header", sql.NVarChar(100), req.body.news_header)
+            request.input("news_status", sql.NVarChar(100), req.body.news_status)
             request.input("news_description", sql.NVarChar(255), req.body.news_description)
             request.input("user_name", sql.NVarChar(20), req.body.user_name)
             request.execute("sp_news_management", (err, result) => {
