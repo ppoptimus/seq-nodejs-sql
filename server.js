@@ -130,7 +130,7 @@ app.post("/api/searchRequest", (req, res) => {
 	searchRequest(req, res)
 })
 
-app.get("/api/searchRequestDetail", (req, res) => {
+app.post("/api/searchRequestDetail", (req, res) => {
 	searchRequestDetail(req, res)
 })
 
