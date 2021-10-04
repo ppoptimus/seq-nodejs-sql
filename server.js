@@ -27,6 +27,7 @@ const searchRequest = require("./2.transaction_data/fn_12GetSearchRequest")
 const searchRequestDetail = require("./2.transaction_data/fn_13GetSearchRequestDetail")
 const saveLog = require("./fn_SaveLog")
 const saveMasterUser = require("./1.master_data/fn_SaveMasterUser")
+const newsManagement = require("./1.master_data/fn_news_management")
 
 //-------Declare function -------//
 const app = express()
@@ -165,6 +166,9 @@ app.post("/api/saveMasterUser", (req, res) => {
 	saveMasterUser(req, res)
 })
 
+app.post("/api/newsManagement", (req, res) => {
+	newsManagement(req, res)
+})
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
 app.listen(port, () => {
