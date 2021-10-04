@@ -29,6 +29,8 @@ const saveLog = require("./fn_SaveLog")
 const saveMasterUser = require("./1.master_data/fn_SaveMasterUser")
 const newsManagement = require("./1.master_data/fn_NewsManagement")
 const configManagement = require("./1.master_data/fn_ConfigManagement")
+const getMasterNews = require("./1.master_data/fn_get_master_news")
+const getMasterConfig = require("./1.master_data/fn_getMasterConfig")
 
 //-------Declare function -------//
 const app = express()
@@ -173,6 +175,14 @@ app.post("/api/newsManagement", (req, res) => {
 
 app.post("/api/configManagement", (req, res) => {
 	configManagement(req, res)
+})
+
+app.get("/api/getMasterNews", (req, res) => {
+	getMasterNews(req, res)
+})
+
+app.get("/api/getMasterConfig", (req, res) => {
+	getMasterConfig(req, res)
 })
 
 //------------------------------------------------------------------------------------------------------//
