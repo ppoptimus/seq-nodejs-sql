@@ -12,13 +12,13 @@ const newsManagement = (req, res) => {
             request.input("user_name", sql.NVarChar(20), req.body.user_name)
             request.execute("sp_news_management", (err, result) => {
                 if(err){
-                    saveLog("create nwes", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
+                    saveLog("create news", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
                     return res.status(500).json({ message: "error", description: err.originalError.message })
                 }
             return res.status(200).json(result.recordset)
             })
         } catch (err) {
-            saveLog("create nwes", "error", "sql", err.originalError.message, null, req.body.create_by, req.body.ip_address)
+            saveLog("create news", "error", "sql", err.originalError.message, null, req.body.create_by, req.body.ip_address)
             return res.status(501).json({ message: "error", description: err.originalError.message })
         }
     })
