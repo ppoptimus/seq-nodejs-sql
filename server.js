@@ -31,6 +31,10 @@ const newsManagement = require("./1.master_data/fn_NewsManagement")
 const configManagement = require("./1.master_data/fn_ConfigManagement")
 const getMasterNews = require("./1.master_data/fn_get_master_news")
 const getMasterConfig = require("./1.master_data/fn_getMasterConfig")
+const saveLogLogin = require("./3.log_data/fn_SaveLogLogin")
+const saveLogLogout = require("./3.log_data/fn_SaveLogLogout")
+const getLogLogin = require("./3.log_data/fn_GetLogLogin")
+const getLogEvent = require("./3.log_data/fn_GetLogEvent")
 
 //-------Declare function -------//
 const app = express()
@@ -185,6 +189,21 @@ app.get("/api/getMasterConfig", (req, res) => {
 	getMasterConfig(req, res)
 })
 
+app.post("/api/saveLogLogin", (req, res) => {
+	saveLogLogin(req, res)
+})
+
+app.post("/api/saveLogLogout", (req, res) => {
+	saveLogLogout(req, res)
+})
+
+app.post("/api/getLogLogin", (req, res) => {
+	getLogLogin(req, res)
+})
+
+app.post("/api/getLogEvent", (req, res) => {
+	getLogEvent(req, res)
+})
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 5000
 app.listen(port, () => {
