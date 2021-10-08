@@ -205,7 +205,7 @@ app.post("/api/getLogEvent", (req, res) => {
 	getLogEvent(req, res)
 })
 //------------------------------------------------------------------------------------------------------//
-const port = process.env.port || 5000
+const port = process.env.port || 3000
 app.listen(port, () => {
 	console.log("Application is running on port: " + port)
 })
