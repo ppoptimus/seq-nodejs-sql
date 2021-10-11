@@ -35,6 +35,8 @@ const saveLogLogin = require("./3.log_data/fn_SaveLogLogin")
 const saveLogLogout = require("./3.log_data/fn_SaveLogLogout")
 const getLogLogin = require("./3.log_data/fn_GetLogLogin")
 const getLogEvent = require("./3.log_data/fn_GetLogEvent")
+const uploadAttachFile = require("./2.transaction_data/fn_UploadAttachFile")
+const downloadAttachFile = require("./2.transaction_data/fn_DownloadAttachFile")
 
 //-------Declare function -------//
 const app = express()
@@ -122,7 +124,6 @@ app.post("/api/getDataToExport", (req, res) => {
 })
 
 app.get("/api/download", (req, res) => {
-	console.log("load")
 	DownloadFile(req, res)
 })
 
@@ -203,6 +204,14 @@ app.post("/api/getLogLogin", (req, res) => {
 
 app.post("/api/getLogEvent", (req, res) => {
 	getLogEvent(req, res)
+})
+
+app.post("/api/uploadAttachFile", (req, res) => {
+	uploadAttachFile(req, res)
+})
+
+app.get("/api/downloadAttachFile", (req, res) => {
+	downloadAttachFile(req, res)
 })
 //------------------------------------------------------------------------------------------------------//
 const port = process.env.port || 3000
