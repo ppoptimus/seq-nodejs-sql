@@ -12,7 +12,7 @@ const checkUserLogin = (req, res) => {
 		request.input("first_name", sql.NChar(50), req.body.first_name)
 		request.input("last_name", sql.NChar(50), req.body.last_name)
 		request.input("department_code", sql.NChar(50), req.body.department_code)
-		request.execute("sp_check_user", (err, result) => {
+		request.execute("sp_user_login", (err, result) => {
 			if (err) {
 				res.status(501).json({ message: "error", description: err.originalError.message })
 			}
