@@ -37,6 +37,8 @@ const getLogLogin = require("./3.log_data/fn_GetLogLogin")
 const getLogEvent = require("./3.log_data/fn_GetLogEvent")
 const uploadAttachFile = require("./2.transaction_data/fn_UploadAttachFile")
 const downloadAttachFile = require("./2.transaction_data/fn_DownloadAttachFile")
+const getLogEventDetail = require("./3.log_data/fn_GetLogEventDetail")
+const getLogLoginDetail = require("./3.log_data/fn_GetLogLoginDetail")
 
 //-------Declare function -------//
 const app = express()
@@ -204,6 +206,14 @@ app.post("/api/getLogLogin", (req, res) => {
 
 app.post("/api/getLogEvent", (req, res) => {
 	getLogEvent(req, res)
+})
+
+app.post("/api/getLogLoginDetail", (req, res) => {
+	getLogLoginDetail(req, res)
+})
+
+app.post("/api/getLogEventDetail", (req, res) => {
+	getLogEventDetail(req, res)
 })
 
 app.post("/api/uploadAttachFile", (req, res) => {

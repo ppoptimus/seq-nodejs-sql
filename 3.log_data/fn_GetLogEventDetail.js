@@ -2,13 +2,13 @@ const sql = require("mssql")
 const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
 
-const getLogEvent = (req, res) => {
+const getLogEventDetail = (req, res) => {
     sql.connect(config, () => {
         try {
             let request = new sql.Request()
             request.input("start_date", sql.NVarChar(10), req.body.start_date)
             request.input("end_date", sql.NVarChar(10), req.body.end_date)
-			request.execute("sp_get_log_event", (err, result) => {
+			request.execute("sp_get_log_event_detail", (err, result) => {
                 if(result){
                     return res.status(200).json(result.recordset)
                 }
@@ -21,4 +21,4 @@ const getLogEvent = (req, res) => {
     })
 }
 
-module.exports = getLogEvent
+module.exports = getLogEventDetail
