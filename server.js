@@ -40,6 +40,7 @@ const downloadAttachFile = require("./2.transaction_data/fn_DownloadAttachFile")
 const getLogEventDetail = require("./3.log_data/fn_GetLogEventDetail")
 const getLogLoginDetail = require("./3.log_data/fn_GetLogLoginDetail")
 const getMasterDepartment = require("./1.master_data/fn_GetMasterDepartment")
+const saveMasterDepartment = require("./1.master_data/fn_save_master_department")
 
 //-------Declare function -------//
 const app = express()
@@ -227,6 +228,10 @@ app.get("/api/downloadAttachFile", (req, res) => {
 
 app.get("/api/getMasterDepartment", (req, res) => {
 	getMasterDepartment(req, res)
+})
+
+app.post("/api/saveMasterDepartment", (req, res) => {
+	saveMasterDepartment(req, res)
 })
 
 //------------------------------------------------------------------------------------------------------//
