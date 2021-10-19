@@ -29,8 +29,8 @@ const saveLog = require("./fn_SaveLog")
 const saveMasterUser = require("./1.master_data/fn_SaveMasterUser")
 const newsManagement = require("./1.master_data/fn_NewsManagement")
 const configManagement = require("./1.master_data/fn_ConfigManagement")
-const getMasterNews = require("./1.master_data/fn_get_master_news")
-const getMasterConfig = require("./1.master_data/fn_getMasterConfig")
+const getMasterNews = require("./1.master_data/fn_GetMasterNews")
+const getMasterConfig = require("./1.master_data/fn_GetMasterConfig")
 const saveLogLogin = require("./3.log_data/fn_SaveLogLogin")
 const saveLogLogout = require("./3.log_data/fn_SaveLogLogout")
 const getLogLogin = require("./3.log_data/fn_GetLogLogin")
@@ -40,7 +40,8 @@ const downloadAttachFile = require("./2.transaction_data/fn_DownloadAttachFile")
 const getLogEventDetail = require("./3.log_data/fn_GetLogEventDetail")
 const getLogLoginDetail = require("./3.log_data/fn_GetLogLoginDetail")
 const getMasterDepartment = require("./1.master_data/fn_GetMasterDepartment")
-const saveMasterDepartment = require("./1.master_data/fn_save_master_department")
+const saveMasterDepartment = require("./1.master_data/fn_SaveMasterDepartment")
+const deleteMasterUser = require("./1.master_data/fn_DeleteMasterUser")
 
 //-------Declare function -------//
 const app = express()
@@ -232,6 +233,10 @@ app.get("/api/getMasterDepartment", (req, res) => {
 
 app.post("/api/saveMasterDepartment", (req, res) => {
 	saveMasterDepartment(req, res)
+})
+
+app.post("/api/deleteMasterUser", (req, res) => {
+	deleteMasterUser(req, res)
 })
 
 //------------------------------------------------------------------------------------------------------//
