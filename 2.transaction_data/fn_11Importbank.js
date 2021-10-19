@@ -24,6 +24,7 @@ const ImportBank = (req, res) => {
 				request.input("status_code", sql.NVarChar(5), req.body.dataset[x].status_code)
 				request.input("branch_name", sql.NVarChar(100), req.body.dataset[x].branch_name)
 				request.input("account_no", sql.NVarChar(20), req.body.dataset[x].account_no)
+				request.input("account_type_code", sql.NVarChar(5), req.body.dataset[x].account_type_code)
 				request.input("account_name", sql.NVarChar(100), req.body.dataset[x].account_name)
 				request.input("balance", sql.NVarChar(50), req.body.dataset[x].balance)
 				request.input("investigate_date", sql.NVarChar(30), req.body.dataset[x].investigate_date)
