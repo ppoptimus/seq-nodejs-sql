@@ -6,7 +6,7 @@ const saveLogLogin = (req, res) => {
     sql.connect(config, () => {
         try {
             let request = new sql.Request()
-            request.input("user_name", sql.NVarChar(20), req.body.user_name)
+            request.input("user_name", sql.NVarChar(50), req.body.user_name)
 			request.execute("sp_save_log_login", (err, result) => {
                 res.status(200).json(result.recordset)
             })

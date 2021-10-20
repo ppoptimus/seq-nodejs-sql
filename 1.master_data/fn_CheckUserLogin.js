@@ -2,12 +2,12 @@ const sql = require("mssql")
 const config = require("../dbConfig")
 
 const checkUserLogin = (req, res) => {
-    sql.connect(config, (err) => {
-        if (err) {
+	sql.connect(config, (err) => {
+		if (err) {
 			return res.status(400).json({ message: "error", description: err.originalError.message })
 		}
 
-        let request = new sql.Request()
+		let request = new sql.Request()
 		request.input("user_name", sql.NChar(50), req.body.user_name)
 		request.input("first_name", sql.NChar(50), req.body.first_name)
 		request.input("last_name", sql.NChar(50), req.body.last_name)
@@ -18,7 +18,7 @@ const checkUserLogin = (req, res) => {
 			}
 			res.status(200).json(result.recordset)
 		})
-    })
+	})
 }
 
-module.exports = checkUserLogin;
+module.exports = checkUserLogin
