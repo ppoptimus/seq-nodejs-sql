@@ -3,7 +3,8 @@ const express = require("express")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 
-//------Call another page -------//
+
+//#region Call another page
 const getUserDetail = require("./1.master_data/fn_GetUserDetail")
 const getUserLevel = require("./1.master_data/fn_GetUserLevel")
 const getTitle = require("./1.master_data/fn_GetTitle")
@@ -42,12 +43,13 @@ const getLogLoginDetail = require("./3.log_data/fn_GetLogLoginDetail")
 const getMasterDepartment = require("./1.master_data/fn_GetMasterDepartment")
 const saveMasterDepartment = require("./1.master_data/fn_SaveMasterDepartment")
 const deleteMasterUser = require("./1.master_data/fn_DeleteMasterUser")
+const getImportHistory = require("./2.transaction_data/fn_GetImportHistory")
+const getImportHistoryDetail = require("./2.transaction_data/fn_GetImportHistoryDetail")
+//#endregion Call another page ----//
 
 //-------Declare function -------//
 const app = express()
 app.use(cors())
-// app.use(bodyParser.json())
-// app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 const requestStart = Date.now()
@@ -239,8 +241,17 @@ app.post("/api/deleteMasterUser", (req, res) => {
 	deleteMasterUser(req, res)
 })
 
-//------------------------------------------------------------------------------------------------------//
+app.post("/api/getImportHistory", (req, res) => {
+	getImportHistory(req, res)
+})
+
+app.post("/api/getImportHistoryDetail", (req, res) => {
+	getImportHistoryDetail(req, res)
+})
+
+//#region Config PORT ---//
 const port = process.env.port || 3000
 app.listen(port, () => {
 	console.log("Application is running on port: " + port)
 })
+//#endregion
