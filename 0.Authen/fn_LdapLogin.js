@@ -37,8 +37,8 @@ const localLogin = (req, res) => {
 					return res.status(200).json(userDetail)
 					break
 				default:
-					ldapLogin(req.body.user_name, req.body.pwd)
-					return res.status(200).json(returnObject)
+					// ldapLogin(req.body.user_name, req.body.pwd)
+					// return res.status(200).json(returnObject)
 					break
 			}
 		} catch (err) {

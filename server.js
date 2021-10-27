@@ -45,7 +45,7 @@ const saveMasterDepartment = require("./1.master_data/fn_SaveMasterDepartment")
 const deleteMasterUser = require("./1.master_data/fn_DeleteMasterUser")
 const getImportHistory = require("./2.transaction_data/fn_GetImportHistory")
 const getImportHistoryDetail = require("./2.transaction_data/fn_GetImportHistoryDetail")
-const ldapLogin = require("./1.master_data/fn_LdapLogin")
+const ldapLogin = require("./0.Authen/fn_LdapLogin")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
