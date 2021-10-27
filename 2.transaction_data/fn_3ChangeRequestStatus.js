@@ -20,7 +20,7 @@ const changeRequestStatus = (req, res) => {
             }
             saveLog("changeRequestStatus", "success", 'request_id = '+ req.body.new_request_id, null, "t_trans_request_detail", req.body.user_name, req.body.ip_address)
             console.log(result.recordset[0])
-            res.status(200).json(result.recordset[0])
+            res.status(204).json(result.recordset[0])
         })
     })
 }

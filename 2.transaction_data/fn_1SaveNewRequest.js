@@ -34,7 +34,7 @@ const saveRequestDetail = (req, res) => {
 				}
 				saveLog("Save new Request", "success", null, null, "t_trans_request_detail", req.body.user_name, req.body.ip_address)
 				console.log(result.recordset[0])
-				res.status(200).json(result.recordset[0])
+				res.status(204).json(result.recordset[0])
 			}
 			
 		})

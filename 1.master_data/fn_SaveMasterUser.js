@@ -12,6 +12,7 @@ const saveMasterUser = (req, res) => {
             request.input("personal_id", sql.NVarChar(20), req.body.personal_id)
             request.input("department_code", sql.NVarChar(5), req.body.department_code)
             request.input("userlevel_id", sql.Int, req.body.userlevel_id)
+            request.input("status_id", sql.Int, req.body.status_id)
             request.input("create_by", sql.NVarChar(20), req.body.create_by)
             request.execute("sp_save_master_user", (err, result) => {
                 if(err){
