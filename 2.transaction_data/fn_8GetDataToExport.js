@@ -41,7 +41,7 @@ const getExport = async (req, res) => {
 							bankCode.recordset.forEach((obj) => {
 								Object.entries(obj).forEach(([key, value]) => {
 									let dirBank = `SSO_${value}_${req.body.request_code}`
-									if (existsSync(`public/${dirNameZip}`)) {
+									if (existsSync(`public/export/${dirNameZip}`)) {
 										//-----------step2 create sup folder---------//
 										createDirBank(dirNameZip, dirBank)
 
@@ -50,7 +50,7 @@ const getExport = async (req, res) => {
 										generateText(result.recordset, dirNameZip, dirBank, dirBank)
 										
 										//-----------step4 Zip dierectory--------------//
-										zipDirectory(`public/${dirNameZip}`, `public/${dirNameZip}`)
+										zipDirectory(`public/export/${dirNameZip}`, `public/export/${dirNameZip}`)
 									}
 								})
 							})
@@ -67,15 +67,12 @@ const getExport = async (req, res) => {
 }
 
 const createDirZip = (dir) => {
-	// if (!existsSync(".public")) {
-	// 	mkdirSync(".public")
-	// }
-	fsExtra.emptyDirSync(`public`)
-	mkdirSync(`public/${dir}`)
+	fsExtra.emptyDirSync(`public/export`)
+	mkdirSync(`public/export/${dir}`)
 }
 
 const createDirBank = (dirZip, dirBank) => {
-	mkdirSync(`public/${dirZip}/${dirBank}`)
+	mkdirSync(`public/export/${dirZip}/${dirBank}`)
 }
 
 const genearteExcel = (content, folderZip, folderBank, fileName) => {
@@ -88,7 +85,7 @@ const genearteExcel = (content, folderZip, folderBank, fileName) => {
 		xlsx.utils.sheet_add_json(newWorksheet, content, { skipHeader: true, origin: -1});
 
 		xlsx.utils.book_append_sheet(newWorkbook, newWorksheet, fileName)
-		xlsx.writeFile(newWorkbook, `public/${folderZip}/${folderBank}/${fileName}.xlsx`)
+		xlsx.writeFile(newWorkbook, `public/export/${folderZip}/${folderBank}/${fileName}.xlsx`)
 	} catch (error) {
 		throw error
 	}
@@ -108,7 +105,7 @@ const generateText = (content, folderZip, folderBank, fileName) => {
 			content[i].refference_id +
 			content[i].birth_date +
 			content[i].address
-		appendFile(`public/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
+		appendFile(`public/export/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
 		if(err){throw err}
 	})
 	}

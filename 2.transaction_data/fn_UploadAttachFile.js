@@ -1,13 +1,13 @@
 const multer = require("multer")
 
 const uploadFile = (req, res) => {
-    let fileName;
+	let fileName
 	let storage = multer.diskStorage({
 		destination: function (req, file, cb) {
-			cb(null, "public")
+			cb(null, "public/attach")
 		},
 		filename: function (req, file, cb) {
-            fileName = file.originalname;
+			fileName = file.originalname
 			cb(null, file.originalname)
 		},
 	})
@@ -20,7 +20,7 @@ const uploadFile = (req, res) => {
 		} else if (err) {
 			return res.status(500).json(err)
 		}
-		return res.status(200).json({"status":res.statusText, "file_name":fileName})
+		return res.status(200).json({ status: res.statusText, file_name: fileName })
 	})
 }
 
