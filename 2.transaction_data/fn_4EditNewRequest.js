@@ -3,6 +3,7 @@ const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
 
 const editNewRequest = (req, res) => {
+    console.log(req.body)
     sql.connect(config, (err) => {
         if(err){
             saveLog("editNewRequest", "error", "sql, connection", err.originalError.message, null, req.body.user_name, req.body.ip_address)

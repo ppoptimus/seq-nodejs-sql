@@ -3,6 +3,7 @@ const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
 
 const changeRequestStatus = (req, res) => {
+    console.log(req.body)
     sql.connect(config, (err) => {
         if(err){
             saveLog("changeRequestStatus", "error", "sql connect", err.originalError.message, null, req.body.user_name, req.body.ip_address)
@@ -18,7 +19,8 @@ const changeRequestStatus = (req, res) => {
                 return res.status(501).json({ message: "error", description: err.originalError.message })
             }
             saveLog("changeRequestStatus", "success", 'request_id = '+ req.body.new_request_id, null, "t_trans_request_detail", req.body.user_name, req.body.ip_address)
-            res.status(204).json(result.recordset[0])
+            console.log(result.recordset[0])
+            res.status(200).json(result.recordset[0])
         })
     })
 }

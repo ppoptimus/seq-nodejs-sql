@@ -3,7 +3,6 @@ const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
 
 const saveRequestDetail = (req, res) => {
-	
     sql.connect(config, (err) => {
 		let request = new sql.Request()
 		request.input("document_no", sql.NVarChar(20), req.body.document_no)
@@ -35,7 +34,7 @@ const saveRequestDetail = (req, res) => {
 				}
 				saveLog("Save new Request", "success", null, null, "t_trans_request_detail", req.body.user_name, req.body.ip_address)
 				console.log(result.recordset[0])
-				res.status(204).json(result.recordset[0])
+				res.status(200).json(result.recordset[0])
 			}
 			
 		})
