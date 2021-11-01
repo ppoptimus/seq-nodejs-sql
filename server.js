@@ -46,6 +46,7 @@ const deleteMasterUser = require("./1.master_data/fn_DeleteMasterUser")
 const getImportHistory = require("./2.transaction_data/fn_GetImportHistory")
 const getImportHistoryDetail = require("./2.transaction_data/fn_GetImportHistoryDetail")
 const ldapLogin = require("./0.Authen/fn_LdapLogin")
+const getExportHistory = require("./2.transaction_data/fn_GetExportHistory")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
@@ -240,6 +241,10 @@ app.post("/api/saveMasterDepartment", (req, res) => {
 
 app.post("/api/deleteMasterUser", (req, res) => {
 	deleteMasterUser(req, res)
+})
+
+app.post("/api/getExporttHistory", (req, res) => {
+	getExportHistory(req, res)
 })
 
 app.post("/api/getImportHistory", (req, res) => {
