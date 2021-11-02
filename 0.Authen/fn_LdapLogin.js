@@ -1,100 +1,41 @@
 const sql = require("mssql")
 const config = require("../dbConfig")
-const saveLog = require("../fn_SaveLog")
-const ldap = require("ldapjs")
+const { authenticate } = require("ldap-authentication")
 
-const localLogin = (req, res) => {
-	sql.connect(config, () => {
-		try {
-			let request = new sql.Request()
-			request.input("user_name", sql.NVarChar(50), req.body.user_name)
-			request.execute("sp_save_log_login", () => {})
-			let userDetail = {}
-			switch (req.body.user_name) {
-				case "uatadmin":
-					userDetail = {
-						username: req.body.user_name,
-						first_name: "ทดสอบ",
-						last_name: "แอดมิน",
-						personal_id: "1234567890123",
-						department_code: "1000",
-						userlevel_id: "2",
-						user_level_name: "admin",
-					}
-					return res.status(200).json(userDetail)
-					break
-
-				case "uatuser":
-					userDetail = {
-						username: req.body.user_name,
-						first_name: "ทดสอบ",
-						last_name: "ผู้ใช้สาขา",
-						personal_id: "1234567890123",
-						department_code: "1003",
-						userlevel_id: "3",
-						user_level_name: "user",
-					}
-					return res.status(200).json(userDetail)
-					break
-				default:
-					// ldapLogin(req.body.user_name, req.body.pwd)
-					// return res.status(200).json(returnObject)
-					break
-			}
-		} catch (err) {
-			// saveLog("save log login", "error", "request body", err.message, null, req.body.user_name, null)
-			return res.status(501).json({ message: "error", description: err })
+const ldapLogin = async (req, res) => {
+	try {
+		let options = {
+			ldapOpts: { url: "ldap://172.20.10.17:389" },
+			userDn: "uid=appssows,cn=App,ou=internal,DC=ESSS,DC=SSO,DC=GO,DC=TH",
+			userPassword: "Tory<oN",
+			userSearchBase: "cn=Users,ou=internal,dc=ESSS,dc=SSO,dc=GO,dc=TH",
+			usernameAttribute: "uid",
+			username: req.body.user_name,
 		}
-	})
-}
 
-const ldapLogin = (username, password) => {
-	let dataset = {}
-	try {
-		const client = ldap.createClient({
-			url: "ldap://172.20.10.17:389",
-		})
+		let user = await authenticate(options)
 
-		client.bind("uid=appssows,cn=App,ou=internal,DC=ESSS,DC=SSO,DC=GO,DC=TH", "Tory<oN", () => {
-			const opts = {
-				filter: `(&(uid=${username})(accountActive=TRUE))`,
-				scope: "sub",
-				attributes: ["givenName", "sn", "cn", "SSObranchCode", "ssofirstname", "ssosurname", "ssopersoncitizenid", "uid"],
-			}
+		let optionsauthen = {
+			ldapOpts: { url: "ldap://172.20.10.17:389" },
+			userDn: user.dn,
+			userPassword: req.body.pwd,
+		}
+    let useraurthen = await authenticate(optionsauthen)
 
-			client.search("cn=Users,ou=internal,dc=ESSS,dc=SSO,dc=GO,dc=TH", opts, (err, res) => {
-				if (err) {
-					console.log(err)
-				} else {
-					res.on("searchEntry", (entry) => {
-						let SSObranchCode = JSON.stringify(entry.object.SSObranchCode)
-						let ssopersoncitizenid = JSON.stringify(entry.object.ssopersoncitizenid)
-						let uid = JSON.stringify(entry.object.uid)
-						let ssofirstname = JSON.stringify(entry.object.ssofirstname)
-						let ssosurname = JSON.stringify(entry.object.ssosurname)
-						dataset = {
-							SSObranchCode: SSObranchCode,
-							ssopersoncitizenid: ssopersoncitizenid,
-							uid: uid,
-							ssofirstname: ssofirstname,
-							ssosurname: ssosurname,
-						}
-						returnObject(dataset)
-					})
-				}
-			})
-		})
-	} catch (error) {
-		console.log(error)
+    let userDetail = (useraurthen) ? {
+      username: user.uid,
+      first_name: user.ssofirstname,
+      last_name: user.ssosurname,
+      personal_id: user.ssopersoncitizenid,
+      department_code: user.SSObranchCode,
+      userlevel_id: 1,
+      user_level_name: "admin",
+    } : null;
+    console.log(user)
+		res.json(userDetail)
+	} catch (err) {
+		res.status(501).json({ message: "error", description: "Invalid Credentials" })
 	}
 }
 
-const returnObject = (req, res) => {
-	try {
-		let obj = JSON.stringify(req)
-		return obj
-	} catch (error) {
-		return error
-	}
-}
-module.exports = localLogin
+module.exports = ldapLogin

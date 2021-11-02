@@ -10,7 +10,7 @@ const generateRequestCode = (req, res) => {
         }
         
         let request = new sql.Request()
-        request.execute("dbo.sp_auto_generate_code", (err, result) => {
+        request.execute("sp_auto_generate_code", (err, result) => {
             if(err){
                 saveLog("generateRequestCode", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
                 return res.status(501).json({ message: "error", description: err.originalError.message })

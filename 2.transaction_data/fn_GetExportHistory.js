@@ -3,7 +3,6 @@ const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
 
 const getExportHistory = (req, res) => {
-  console.log(req.body)
 	sql.connect(config, () => {
 		try {
 			let request = new sql.Request()
