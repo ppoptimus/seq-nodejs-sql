@@ -14,7 +14,6 @@ const ldapLogin = async (req, res) => {
 		}
 
 		let user = await authenticate(options)
-
 		let optionsauthen = {
 			ldapOpts: { url: "ldap://172.20.10.17:389" },
 			userDn: user.dn,
@@ -31,10 +30,10 @@ const ldapLogin = async (req, res) => {
       userlevel_id: 1,
       user_level_name: "admin",
     } : null;
-    console.log(user)
-		res.json(userDetail)
+    console.log(userDetail)
+		return res.json(userDetail)
 	} catch (err) {
-		res.status(501).json({ message: "error", description: "Invalid Credentials" })
+		return res.status(200).json({ message: "error", description: "Invalid Credentials" })
 	}
 }
 
