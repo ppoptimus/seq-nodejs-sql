@@ -48,6 +48,7 @@ const getImportHistoryDetail = require("./2.transaction_data/fn_GetImportHistory
 const ldapLogin = require("./0.Authen/fn_UATLogin")
 const getExportHistory = require("./2.transaction_data/fn_GetExportHistory")
 const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
+const ldapSearch = require("./0.Authen/fn_LdapSearch")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
@@ -262,6 +263,10 @@ app.post("/api/getImportHistoryDetail", (req, res) => {
 
 app.post("/api/ldapLogin", (req, res) => {
 	ldapLogin(req, res)
+})
+
+app.post("/api/ldapSearch", (req, res) => {
+	ldapSearch(req, res)
 })
 
 //#region Config PORT ---//
