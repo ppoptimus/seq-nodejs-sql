@@ -30,10 +30,9 @@ const ldapLogin = async (req, res) => {
       userlevel_id: 1,
       user_level_name: "admin",
     } : null;
-    console.log(userDetail)
 		return res.json(userDetail)
 	} catch (err) {
-		return res.status(200).json({ message: "error", description: "Invalid Credentials" })
+		return res.status(203).json({ message: "error", description: "Invalid Credentials" })
 	}
 }
 

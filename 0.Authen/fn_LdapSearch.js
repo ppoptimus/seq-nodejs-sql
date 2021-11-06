@@ -47,7 +47,7 @@ const ldapSearch = async (req, res) => {
       return res.status(200).json(userDetail)
     }
   } catch (err) {
-    return res.status(200).json({ message: "error", description: "Invalid Credentials" })
+    return res.status(203).json({ message: "error", description: "Invalid Credentials" })
   }
 }
 
