@@ -14,7 +14,7 @@ const localLogin = (req, res) => {
 			switch (req.body.user_name) {
 				case "uatadmin":
 					userDetail = {
-						username: req.body.user_name,
+						user_name: req.body.user_name,
 						first_name: "ทดสอบ",
 						last_name: "แอดมิน",
 						personal_id: "1234567890123",
@@ -27,7 +27,7 @@ const localLogin = (req, res) => {
 
 				case "uatuser":
 					userDetail = {
-						username: req.body.user_name,
+						user_name: req.body.user_name,
 						first_name: "ทดสอบ",
 						last_name: "ผู้ใช้สาขา",
 						personal_id: "1234567890123",

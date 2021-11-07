@@ -22,7 +22,7 @@ const ldapLogin = async (req, res) => {
     let useraurthen = await authenticate(optionsauthen)
 
     let userDetail = (useraurthen) ? {
-      username: user.uid,
+		user_name: user.uid,
       first_name: user.ssofirstname,
       last_name: user.ssosurname,
       personal_id: user.ssopersoncitizenid,
