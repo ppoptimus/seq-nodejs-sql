@@ -6,7 +6,10 @@ const getMasterConfig = (req, res) => {
         try {
             let request = new sql.Request()
             request.execute("sp_get_master_config", (err, result) => {
-            return res.status(200).json(result.recordset)
+                if (result) {
+                    
+                    return res.status(200).json(result.recordset)
+                }
             })
         } catch (err) {
             return res.status(501).json({ message: "error", description: err.originalError.message })

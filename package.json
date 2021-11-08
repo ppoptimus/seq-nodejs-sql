@@ -21,7 +21,6 @@
     "fs": "^0.0.1-security",
     "fs-extra": "^10.0.0",
     "ldap-authentication": "^2.2.9",
-    "ldapjs": "^2.3.1",
     "mssql": "^7.1.0",
     "multer": "^1.4.3",
     "nodemon": "^2.0.7",

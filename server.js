@@ -118,7 +118,8 @@ app.get("/api/getAllRequest", (req, res) => {
 })
 
 app.post("/api/saveDocumentSet", (req, res) => {
-	saveDocumentSet(req, res)
+	console.log(req.body)
+	// saveDocumentSet(req, res)
 })
 
 app.post("/api/stampExport", (req, res) => {
@@ -130,7 +131,6 @@ app.post("/api/editNewRequest", (req, res) => {
 })
 
 app.post("/api/getDataToExport", (req, res) => {
-	console.log("get")
 	getDataToExport(req, res)
 })
 

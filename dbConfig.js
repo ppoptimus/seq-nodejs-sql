@@ -1,7 +1,7 @@
 const sqlConfig = {
 	user: "sa",
 	password: "Peisui@2433",
-	server: "localhost\\sqlexpress",
+	server: "localhost",
 	database: "seq",
 	options: {
 		encrypt: false,

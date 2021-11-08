@@ -1,7 +1,6 @@
 const sql = require("mssql")
 const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
-const ldap = require("ldapjs")
 const ldapLogin = require("../0.Authen/fn_LdapLogin")
 
 const localLogin = (req, res) => {

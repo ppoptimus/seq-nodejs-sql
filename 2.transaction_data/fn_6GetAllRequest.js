@@ -7,7 +7,9 @@ const getAllRequest = (req, res) => {
         try {
             let request = new sql.Request()
             request.execute("sp_get_all_request", (err, result) => {
-                res.status(200).json(result.recordset)
+                if (result) {
+                    res.status(200).json(result.recordset)
+                }
             })
         } catch (err) {
             return res.status(400).json({ message: "error", description: err.originalError.message })
