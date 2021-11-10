@@ -1,7 +1,7 @@
 const sql = require("mssql")
 const config = require("../dbConfig")
 const saveLog = require("../fn_SaveLog")
-const ldapLogin = require("../0.Authen/fn_LdapLogin")
+const ldapLogin = require("../0.Authen/fn_LdapLogin") 
 
 const localLogin = (req, res) => {
 	sql.connect(config, () => {
@@ -37,7 +37,7 @@ const localLogin = (req, res) => {
 					return res.status(200).json(userDetail)
 					break
 				default:
-					ldapLogin(req, res);
+					ldapLogin(req, res)
 					break
 			}
 		} catch (err) {

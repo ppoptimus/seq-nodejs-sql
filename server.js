@@ -3,7 +3,6 @@ const express = require("express")
 const cors = require("cors")
 const bodyParser = require("body-parser")
 
-
 //#region Call another page
 const getUserDetail = require("./1.master_data/fn_GetUserDetail")
 const getUserLevel = require("./1.master_data/fn_GetUserLevel")
@@ -45,7 +44,7 @@ const saveMasterDepartment = require("./1.master_data/fn_SaveMasterDepartment")
 const deleteMasterUser = require("./1.master_data/fn_DeleteMasterUser")
 const getImportHistory = require("./2.transaction_data/fn_GetImportHistory")
 const getImportHistoryDetail = require("./2.transaction_data/fn_GetImportHistoryDetail")
-const ldapLogin = require("./0.Authen/fn_UATLogin")
+const ldapLogin = require("./0.Authen/fn_UATLogin") //เมื่อขึ้น production แล้วเปลี่ยนเป็น path = /fn_LdapLogin.js 
 const getExportHistory = require("./2.transaction_data/fn_GetExportHistory")
 const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
 const ldapSearch = require("./0.Authen/fn_LdapSearch")
@@ -119,8 +118,7 @@ app.get("/api/getAllRequest", (req, res) => {
 })
 
 app.post("/api/saveDocumentSet", (req, res) => {
-	console.log(req.body)
-	// saveDocumentSet(req, res)
+	saveDocumentSet(req, res)
 })
 
 app.post("/api/stampExport", (req, res) => {

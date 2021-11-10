@@ -1,16 +1,16 @@
-const sql = require("mssql")
-const config = require("../dbConfig")
+const ldapConfig = require("../ldapConfig")
 const { authenticate } = require("ldap-authentication")
+
 
 const ldapSearch = async (req, res) => {
   try {
     //------- case search for username --------
     try {
       let options = {
-        ldapOpts: { url: "ldap://172.20.10.17:389" },
-        userDn: "uid=appssows,cn=App,ou=internal,DC=ESSS,DC=SSO,DC=GO,DC=TH",
-        userPassword: "Tory<oN",
-        userSearchBase: "cn=Users,ou=internal,dc=ESSS,dc=SSO,dc=GO,dc=TH",
+        ldapOpts: ldapConfig.ldapOpts,
+        userDn: ldapConfig.userDn,
+        userPassword: ldapConfig.userPassword,
+        userSearchBase: ldapConfig.userSearchBase,
         usernameAttribute: 'uid',
         username: req.body.user_name,
       }
@@ -27,10 +27,10 @@ const ldapSearch = async (req, res) => {
     //------- case search for citizenid --------
     catch {
       let options = {
-        ldapOpts: { url: "ldap://172.20.10.17:389" },
-        userDn: "uid=appssows,cn=App,ou=internal,DC=ESSS,DC=SSO,DC=GO,DC=TH",
-        userPassword: "Tory<oN",
-        userSearchBase: "cn=Users,ou=internal,dc=ESSS,dc=SSO,dc=GO,dc=TH",
+        ldapOpts: ldapConfig.ldapOpts,
+        userDn: ldapConfig.userDn,
+        userPassword: ldapConfig.userPassword,
+        userSearchBase: ldapConfig.userSearchBase,
         usernameAttribute: 'ssopersoncitizenid',
         username: req.body.user_name,
       }
