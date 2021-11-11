@@ -35,7 +35,7 @@ const ImportBank = (req, res) => {
 						saveLog("Import file", "error", "execute store", err.originalError, null, req.body.user_name, req.body.ip_address)
 						return res.status(501).json({ message: "error", description: err.originalError.message })
 					}
-					console.log(result.recordset)
+					// console.log(result.recordset)
 				})
 			}
 			res.send(200);
