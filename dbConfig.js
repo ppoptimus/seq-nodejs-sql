@@ -9,4 +9,15 @@ const sqlConfig = {
 	},
 }
 
+const sqlConfigDev = {
+	user: "appseq",
+	password: "APP@seq",
+	server: "172.16.19.41",
+	database: "sequester",
+	options: {
+		encrypt: false,
+		charset: "utf8",
+	},
+}
+
 module.exports = sqlConfig
