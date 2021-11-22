@@ -15,15 +15,18 @@ const saveMasterUser = (req, res) => {
 			request.input("status_id", sql.Int, req.body.status_id)
 			request.input("create_by", sql.NVarChar(20), req.body.create_by)
 			request.execute("sp_save_master_user", (err, result) => {
-				if (err) {
-					saveLog("save MasterUser", "error", "request body", err.originalError.message, null, req.body.create_by, req.body.ip_address)
-					return res.status(500).json({ message: "error", description: err.originalError.message })
-				}
-				saveLog("Save new User", "success", req.body.user_name, null, null, req.body.create_by, req.body.ip_address)
-				return res.status(200).json(result.recordset)
+                if (result.recordset[0].result === 0) {
+                    saveLog("Save new user", "error", "exec store", result.recordset[0].resultMessage, 't_master_user', req.body.create_by, req.body.ip_address)
+                    return res.status(415).json(result.recordset)
+                }
+                else {
+                    
+                    saveLog("Save new User", "success", req.body.user_name, null, 't_master_user', req.body.create_by, req.body.ip_address)
+                    return res.status(200).json(result.recordset)
+                }
 			})
 		} catch (err) {
-			saveLog("Save new user", "error", "request body", err.originalError.message, null, req.body.create_by, req.body.ip_address)
+			saveLog("Save new user", "error", "request body", err.originalError.message, 't_master_user', req.body.create_by, req.body.ip_address)
 			return res.status(501).json({ message: "error", description: err.originalError.message })
 		}
 	})
