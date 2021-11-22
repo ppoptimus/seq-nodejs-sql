@@ -16,10 +16,10 @@ const saveMasterUser = (req, res) => {
 			request.input("create_by", sql.NVarChar(20), req.body.create_by)
 			request.execute("sp_save_master_user", (err, result) => {
 				if (err) {
-					saveLog("save MasterUser", "error", "request body", err.originalError.message, null, req.body.user_name, req.body.ip_address)
+					saveLog("save MasterUser", "error", "request body", err.originalError.message, null, req.body.create_by, req.body.ip_address)
 					return res.status(500).json({ message: "error", description: err.originalError.message })
 				}
-				saveLog("Save new User", "success", 'save to t_master_user', null, null, req.body.user_name, req.body.ip_address)
+				saveLog("Save new User", "success", req.body.user_name, null, null, req.body.create_by, req.body.ip_address)
 				return res.status(200).json(result.recordset)
 			})
 		} catch (err) {
