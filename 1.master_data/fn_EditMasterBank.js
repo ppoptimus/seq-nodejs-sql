@@ -5,7 +5,7 @@ const saveLog = require("../fn_SaveLog")
 const editMasterBank = (req, res) => {
     sql.connect(config, (err) => {
         let request = new sql.Request()
-        request.input("bank_id", sql.NVarChar(5), req.body.bank_id)
+        request.input("bank_id", sql.Int, req.body.bank_id)
         request.input("bank_code", sql.NVarChar(5), req.body.bank_code)
 		request.input("bank_name", sql.NVarChar(50), req.body.bank_name)
 		request.input("address", sql.NVarChar(255), req.body.address)
