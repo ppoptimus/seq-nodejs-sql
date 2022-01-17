@@ -20,9 +20,9 @@ const ldapLogin = async (req, res) => {
 			userDn: user.dn,
 			userPassword: req.body.pwd,
 		}
-		let useraurthen = await authenticate(optionsauthen)
+		let userauthen = await authenticate(optionsauthen)
 
-		if (useraurthen) {
+		if (userauthen) {
 			sql.connect(config, () => {
 				let request = new sql.Request()
 				request.input("user_name", sql.NChar(50), user.uid)
