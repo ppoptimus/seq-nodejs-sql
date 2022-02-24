@@ -49,6 +49,7 @@ const getExportHistory = require("./2.transaction_data/fn_GetExportHistory")
 const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
 const ldapSearch = require("./0.Authen/fn_LdapSearch")
 const getExportHistoryDetail = require("./2.transaction_data/fn_GetExportHistoryDetail")
+const deleteImportBank = require("./2.transaction_data/fn_DeleteImportBank")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
@@ -63,7 +64,22 @@ app.get("/api", (req, res) => {
 	testConnect(req, res)
 })
 
-//--------------- Save data input from Branch -----------------//
+//------- Login with LDAP -------//
+app.post("/api/ldapLogin", (req, res) => {
+	ldapLogin(req, res)
+})
+
+//------ Search user in LDAP ------//
+app.post("/api/ldapSearch", (req, res) => {
+	ldapSearch(req, res)
+})
+
+//---------- Get All Request to Dashboard------------//
+app.get("/api/getAllRequest", (req, res) => {
+	getAllRequest(req, res)
+})
+
+//--------------- สาขาบันทึกรายการใหม่ -----------------//
 app.post("/api/saveNewRequest", (req, res) => {
 	res.setHeader("Content-Type", "application/json")
 	const { rawHeaders, method, socket, url } = req
@@ -84,7 +100,7 @@ app.post("/api/saveNewRequest", (req, res) => {
 	saveRequestDetail(req, res)
 })
 
-//------------------ Search request detail -------------------//
+//----------------- ค้นหารายการใหม่ -------------------//
 app.post("/api/getNewRequest", async (req, res) => {
 	res.setHeader("Content-Type", "application/json")
 	const { rawHeaders, method, socket, url } = req
@@ -104,68 +120,80 @@ app.post("/api/getNewRequest", async (req, res) => {
 	getRequestDetail(req, res)
 })
 
-//---------------- CHange Request Status -----------------//
-app.post("/api/changeRequestStatus", (req, res) => {
-	changeRequestStatus(req, res)
-})
-
-app.get("/api/autoGenerateCode", (req, res) => {
-	generateRequestCode(req, res)
-})
-
-app.get("/api/getAllRequest", (req, res) => {
-	getAllRequest(req, res)
-})
-
-app.post("/api/saveDocumentSet", (req, res) => {
-	saveDocumentSet(req, res)
-})
-
-app.post("/api/stampExport", (req, res) => {
-	stampExport(req, res)
-})
-
+//----------------- แก้ไขรายการใหม่ -------------------//
 app.post("/api/editNewRequest", (req, res) => {
 	editNewRequest(req, res)
 })
 
+//--------------- Change Request Status --------------//
+app.post("/api/changeRequestStatus", (req, res) => {
+	changeRequestStatus(req, res)
+})
+
+//--------------- Generate RequestCode --------------//
+app.get("/api/autoGenerateCode", (req, res) => {
+	generateRequestCode(req, res)
+})
+
+//--------------- บันทึกเลขชุดหนังสือ -----------------//
+app.post("/api/saveDocumentSet", (req, res) => {
+	saveDocumentSet(req, res)
+})
+
+//-------------- Stamp export datetime-------------//
+app.post("/api/stampExport", (req, res) => {
+	stampExport(req, res)
+})
+
+//-------------- ดึงข้อมูลมา export excel------------//
 app.post("/api/getDataToExport", (req, res) => {
 	getDataToExport(req, res)
 })
 
+//--------------- ดาวน์โหลดไฟล์ excel--------------//
 app.get("/api/download", (req, res) => {
 	DownloadFile(req, res)
 })
 
+//-------------- Import file from Bank------------//
 app.post("/api/importbank", (req, res) => {
 	ImportBank(req, res)
 })
 
+//---------------- ค้นหารายการทั้งหมด --------------//
 app.post("/api/searchRequest", (req, res) => {
 	searchRequest(req, res)
 })
 
+//-------------- ดึงข้อมูลรายการที่ค้นหา -------------//
 app.post("/api/searchRequestDetail", (req, res) => {
 	searchRequestDetail(req, res)
 })
 
-//--------------- Get user / user detail  --------------------//
+//-------------- ดาวน์โหลดไฟล์แนบ -------------//
+app.get("/api/downloadAttachFile", (req, res) => {
+	downloadAttachFile(req, res)
+})
+
+//-------- Get user / user detail  --------------//
 app.get("/api/getUser", (req, res) => {
 	getUserDetail(req, res)
 })
 
-//--------------- Get user' level  --------------------//
+//----------- Get user'level  -------------------//
 app.get("/api/getUserLevel", (req, res) => {
 	getUserLevel(req, res)
 })
 
+/**************************************************
+//-------check user for update when login --------// //---- ไม่ได้ใช้แล้ว รอลบ----//
+ app.post("/api/userLogin", (req, res) => {
+ 	checkUserLogin(req, res)
+ })
+ ************************************************/
+
 app.get("/api/getTitle", (req, res) => {
 	getTitle(req, res)
-})
-
-//---------check user for update when login ----------//
-app.post("/api/userLogin", (req, res) => {
-	checkUserLogin(req, res)
 })
 
 app.get("/api/getAllBank", (req, res) => {
@@ -228,10 +256,6 @@ app.post("/api/uploadAttachFile", (req, res) => {
 	uploadAttachFile(req, res)
 })
 
-app.get("/api/downloadAttachFile", (req, res) => {
-	downloadAttachFile(req, res)
-})
-
 app.get("/api/getMasterDepartment", (req, res) => {
 	getMasterDepartment(req, res)
 })
@@ -264,12 +288,8 @@ app.post("/api/getImportHistoryDetail", (req, res) => {
 	getImportHistoryDetail(req, res)
 })
 
-app.post("/api/ldapLogin", (req, res) => {
-	ldapLogin(req, res)
-})
-
-app.post("/api/ldapSearch", (req, res) => {
-	ldapSearch(req, res)
+app.post("/api/deleteImportBank", (req, res) => {
+	deleteImportBank(req, res)
 })
 
 //#region Config PORT ---//

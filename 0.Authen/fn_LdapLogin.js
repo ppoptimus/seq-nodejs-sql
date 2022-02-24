@@ -22,6 +22,7 @@ const ldapLogin = async (req, res) => {
 		}
 		let userauthen = await authenticate(optionsauthen)
 
+		console.log(user);
 		if (userauthen) {
 			sql.connect(config, () => {
 				let request = new sql.Request()
