@@ -4,6 +4,7 @@ const ldapConfig = require("../ldapConfig")
 const { authenticate } = require("ldap-authentication")
 
 const ldapLogin = async (req, res) => {
+
 	try {
 		let options = {
 			ldapOpts: ldapConfig.ldapOpts,
@@ -15,6 +16,7 @@ const ldapLogin = async (req, res) => {
 		}
 
 		let user = await authenticate(options)
+
 		let optionsauthen = {
 			ldapOpts: ldapConfig.ldapOpts,
 			userDn: user.dn,
@@ -22,7 +24,6 @@ const ldapLogin = async (req, res) => {
 		}
 		let userauthen = await authenticate(optionsauthen)
 
-		console.log(user);
 		if (userauthen) {
 			sql.connect(config, () => {
 				let request = new sql.Request()
@@ -32,16 +33,27 @@ const ldapLogin = async (req, res) => {
 				request.input("department_code", sql.NChar(50), user.SSObranchCode)
 				request.execute("sp_user_login", (err, result) => {
 					if (err) {
-						res.status(501).json({ message: "error", description: err.originalError.message })
+						return res.status(501).json({ message: "error", description: err.originalError.message })
 					}
-					res.status(200).json(result.recordset[0])
+					saveLogLogin(user.uid)
+					
+					res.status(200).json(result.recordset[0]) 
+					return
 				})
 			})
+		} else {
+			return res.status(401).json({ message: "error", description: "username is not authen" })
 		}
-
 	} catch (err) {
 		return res.status(203).json({ result: 0, resultMessage: "โปรดตรวจสอบ username นี้ในระบบส่วนกลาง" })
 	}
 }
 
+const saveLogLogin = (username) => {
+	sql.connect(config, () => {
+		let request = new sql.Request()
+		request.input("user_name", sql.NVarChar(50), username)
+		request.execute("sp_save_log_login", () => {})
+	})
+}
 module.exports = ldapLogin
