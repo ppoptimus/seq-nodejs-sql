@@ -1,28 +1,28 @@
-// //-- ZONE Local --//
-// const sqlConfig = {
-// 	user: "sa",
-// 	password: "Peisui@2433",
-// 	server: "localhost",
-// 	database: "seq",
-// 	options: {
-// 		encrypt: false,
-// 		charset: "utf8",
-// 	},
-// }
-
-//-- ZONE DEV --//
+//-- ZONE Local --//
 const sqlConfig = {
-	user: "appseq",
-	password: "APP@seq",
-	server: "172.16.19.41",
-	database: "sequester",
+	user: "sa",
+	password: "Peisui@2433",
+	server: "localhost",
+	database: "seq",
 	options: {
 		encrypt: false,
 		charset: "utf8",
 	},
 }
 
-//-- ZONE UAT --//
+// //-- ZONE DEV --//
+// const sqlConfig = {
+// 	user: "appseq",
+// 	password: "APP@seq",
+// 	server: "172.16.19.41",
+// 	database: "sequester",
+// 	options: {
+// 		encrypt: false,
+// 		charset: "utf8",
+// 	},
+// }
+
+// //-- ZONE UAT --//
 // const sqlConfig = {
 // 	user: "appseq",
 // 	password: "APP@seq",
