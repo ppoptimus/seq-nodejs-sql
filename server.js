@@ -299,7 +299,7 @@ app.post("/api/deleteImportBank", (req, res) => {
 })
 
 //#region Config PORT ---//
-const port = process.env.port || 3000
+const port = process.env.port || 3003
 app.listen(port, () => {
 	console.log("Application is running on port: " + port)
 })

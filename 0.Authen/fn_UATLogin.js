@@ -25,11 +25,11 @@ const localLogin = (req, res) => {
 					result : 1,
 					username: req.body.user_name,
 					first_name: "ทดสอบ",
-					last_name: "แอดมิน",
+					last_name: "สาขา",
 					personal_id: "1234567890123",
-					department_code: "1000",
-					userlevel_id: "2",
-					user_level_name: "admin",
+					department_code: "1003",
+					userlevel_id: "3",
+					user_level_name: "user",
 				}
 				return res.status(200).json(userDetail)
 			}
