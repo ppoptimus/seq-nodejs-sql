@@ -105,8 +105,10 @@ const generateText = (content, folderZip, folderBank, fileName) => {
 			content[i].refference_id +
 			content[i].birth_date +
 			content[i].address
-		appendFile(`public/export/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "utf8", function(err){
-		if(err){throw err}
+		appendFile(`public/export/${folderZip}/${folderBank}/${fileName}.txt`, str + '\r\n', "latin1", function(err){
+		if(err){
+			console.log('สร้างไฟล์ไม่สำเร็จ:',err)
+		}
 	})
 	}
 }
