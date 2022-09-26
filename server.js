@@ -50,7 +50,6 @@ const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
 const ldapSearch = require("./0.Authen/fn_LdapSearch")
 const getExportHistoryDetail = require("./2.transaction_data/fn_GetExportHistoryDetail")
 const deleteImportBank = require("./2.transaction_data/fn_DeleteImportBank")
-const getconnection = require("./2.transaction_data/fn_0GetConnection")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
@@ -63,11 +62,6 @@ const requestStart = Date.now()
 //------- Test internal connection -------//
 app.get("/api", (req, res) => {
 	testConnect(req, res)
-})
-
-//------- Test TSD connection -------//
-app.post("/api/getconnection", (req, res) => {
-	getconnection(req, res)
 })
 
 //------- Login with LDAP -------//
