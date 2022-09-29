@@ -50,6 +50,7 @@ const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
 const ldapSearch = require("./0.Authen/fn_LdapSearch")
 const getExportHistoryDetail = require("./2.transaction_data/fn_GetExportHistoryDetail")
 const deleteImportBank = require("./2.transaction_data/fn_DeleteImportBank")
+const tsdGetConnect = require("./4.connect_tsd/fn_0GetConnection")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
@@ -290,6 +291,11 @@ app.post("/api/getImportHistoryDetail", (req, res) => {
 
 app.post("/api/deleteImportBank", (req, res) => {
 	deleteImportBank(req, res)
+})
+
+//------- Test TSD connection -------//
+app.post("/api/tsdgetconnection", (req, res) => {
+	tsdGetConnect(req, res)
 })
 
 //#region Config PORT ---//

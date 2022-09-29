@@ -1,9 +1,9 @@
 //-- ZONE Local --//
 const sqlConfig = {
-	user: "sa",
-	password: "Peisui@2433",
+	user: "appseq",
+	password: "APP@seq",
 	server: "localhost",
-	database: "seq",
+	database: "sequester",
 	options: {
 		encrypt: false,
 		charset: "utf8",
