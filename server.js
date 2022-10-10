@@ -50,7 +50,7 @@ const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
 const ldapSearch = require("./0.Authen/fn_LdapSearch")
 const getExportHistoryDetail = require("./2.transaction_data/fn_GetExportHistoryDetail")
 const deleteImportBank = require("./2.transaction_data/fn_DeleteImportBank")
-const tsdGetConnect = require("./4.connect_tsd/fn_0GetConnection")
+const tsdGetConnect = require("./4.connect_tsd/fn_GetConnection")
 //#endregion Call another page ----//
 
 //-------Declare function -------//
