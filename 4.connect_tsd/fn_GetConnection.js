@@ -8,33 +8,18 @@ const decryption = require('./fn_DecryptBody')
 
 const tsdGetConnect = (req, res) => {
 	const apiKey = req.headers['api-key']
-	const input = req.body.input
-	const secret = req.body.secret
-	const plainText = '{"username":"TSD","password":"Tsd@12345#."}'
 
-	//#region decript secret--------------------------------
-	const privateKey = fs.readFileSync('public/private.pem', 'utf8') //ดึง privateKey จากไฟล์ private.pem//
-	const buffer = Buffer.from(secret, 'base64') //Buffer privateKey จากไฟล์ private.pem//
-	const decryptedSecret = crypto.privateDecrypt(
-		//นำ req.body.secret มา decript ด้วย privateKey แล้วเก็บไว้ที่ตัวแปร decryptedData//
-		{
-			key: privateKey.toString(),
-			passphrase: '',
-			padding: crypto.constants.RSA_PKCS1_PADDING,
-		},
-		buffer
-	) //จะได้ secret เพื่อไปถอดรหัส req.body.input อีกทีนึงด้วย AES Algorithm//
-	//#endregion decript secret-----------------------------
+	//#region decript secret
+	
+	//#endregion decript secret
+	// ------------------------------------------------------------------------------------------------------------------------------------
 
-	//#region decript input --------------------------------
-	const en = encryption.encryptInput(plainText)
-	const enSecret = encryption.encryptSecret()
-	// const encrypted = encryption.encryptInput(plainText)
-	// const decrypted = decryption.decriptInput(encrypted)
-	// console.log(decrypted)
+	//#region decript input 
 
-	//#endregion decript input -----------------------------
+	//#endregion decript input 
+	// ------------------------------------------------------------------------------------------------------------------------------------
 
+	//#region response 
 	let response = {
 		responseCode: '',
 		responseStatus: '',
@@ -55,9 +40,10 @@ const tsdGetConnect = (req, res) => {
 		}
 		return res.send(response)
 	})
+	//#endregion response 
 }
 
-//#region Create Public, Private
+//#region Create Public Private
 const generatePublicPrivate = () => {
 	const { publicKey, privateKey } = crypto.generateKeyPairSync('rsa', {
 		modulusLength: 2048,
@@ -68,12 +54,7 @@ const generatePublicPrivate = () => {
 	const exportedPrivateKeyBuffer = privateKey.export({ type: 'pkcs1', format: 'pem' })
 	fs.writeFileSync('public/private.pem', exportedPrivateKeyBuffer, { encoding: 'utf-8' })
 }
-//#endregion--------------------
-
-
-
-const decryptt = (input) => {
-	console.log(input)
-}
+//#endregion
+// ------------------------------------------------------------------------------------------------------------------------------------
 
 module.exports = tsdGetConnect

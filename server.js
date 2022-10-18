@@ -51,6 +51,9 @@ const ldapSearch = require("./0.Authen/fn_LdapSearch")
 const getExportHistoryDetail = require("./2.transaction_data/fn_GetExportHistoryDetail")
 const deleteImportBank = require("./2.transaction_data/fn_DeleteImportBank")
 const tsdGetConnect = require("./4.connect_tsd/fn_GetConnection")
+const encryptBody = require("./4.connect_tsd/fn_EncryptBody")
+const decryptBody = require("./4.connect_tsd/fn_DecryptBody")
+
 //#endregion Call another page ----//
 
 //-------Declare function -------//
@@ -60,6 +63,7 @@ app.use(bodyParser.json({limit: "50mb"}));
 app.use(bodyParser.urlencoded({limit: "50mb", extended: true, parameterLimit:50000}));
 const requestStart = Date.now()
 
+//#region SEQ
 //------- Test internal connection -------//
 app.get("/api", (req, res) => {
 	testConnect(req, res)
@@ -293,10 +297,23 @@ app.post("/api/deleteImportBank", (req, res) => {
 	deleteImportBank(req, res)
 })
 
+//#endregion SEQ
+
+//#region TSD
 //------- Test TSD connection -------//
 app.post("/api/tsdgetconnection", (req, res) => {
 	tsdGetConnect(req, res)
 })
+
+app.post("/api/testencript", (req, res) => {
+	encryptBody(req, res)
+})
+
+app.post("/api/testdecript", (req, res) => {
+	decryptBody(req, res)
+})
+
+//#endregion TSD
 
 //#region Config PORT ---//
 const port = process.env.port || 3003
