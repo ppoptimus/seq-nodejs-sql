@@ -50,9 +50,8 @@ const getWaitingGenerate = require("./2.transaction_data/fn_GetWaitingGenerate")
 const ldapSearch = require("./0.Authen/fn_LdapSearch")
 const getExportHistoryDetail = require("./2.transaction_data/fn_GetExportHistoryDetail")
 const deleteImportBank = require("./2.transaction_data/fn_DeleteImportBank")
-const tsdGetConnect = require("./4.connect_tsd/fn_GetConnection")
-const encryptBody = require("./4.connect_tsd/fn_EncryptBody")
-const decryptBody = require("./4.connect_tsd/fn_DecryptBody")
+
+const getTsdConnect = require("./4.connect_tsd/getTsdConnect")
 
 //#endregion Call another page ----//
 
@@ -301,16 +300,9 @@ app.post("/api/deleteImportBank", (req, res) => {
 
 //#region TSD
 //------- Test TSD connection -------//
-app.post("/api/tsdgetconnection", (req, res) => {
-	tsdGetConnect(req, res)
-})
 
-app.post("/api/testencript", (req, res) => {
-	encryptBody(req, res)
-})
-
-app.post("/api/testdecript", (req, res) => {
-	decryptBody(req, res)
+app.post("/api/getTsdConnect", (req, res) => {
+	getTsdConnect(req, res)
 })
 
 //#endregion TSD
